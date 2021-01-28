@@ -1,0 +1,21 @@
+<div class="example-container text-center">
+  
+  <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your email</mat-label>
+      <input matInput placeholder="pat@example.com" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input matInput placeholder="password" [formControl]="password" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <br>
+
+    <button type="submit" mat-flat-button color="primary">Submit</button>
+    </form>
+  </div>
