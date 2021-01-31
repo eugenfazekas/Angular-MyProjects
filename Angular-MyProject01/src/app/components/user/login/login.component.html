@@ -1,21 +1,23 @@
-<div class="example-container text-center">
-  
-  <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your email</mat-label>
-      <input matInput placeholder="pat@example.com" [formControl]="email" required>
-      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <br>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your password</mat-label>
-      <input matInput placeholder="password" [formControl]="password" required>
-      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-    </mat-form-field>
 
-    <br>
+  <div class="text-center">
+    <form  novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="userLoginFormModel.email" required>
+        <mat-error *ngIf="userLoginFormModel.email.invalid">{{userLoginFormModel.getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br>
+    
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput placeholder="password" [formControl]="userLoginFormModel.password" required>
+        <mat-error *ngIf="userLoginFormModel.password.invalid">{{userLoginFormModel.getPasswordErrorMessage()}}</mat-error>
+      </mat-form-field>
 
-    <button type="submit" mat-flat-button color="primary">Submit</button>
-    </form>
+      <br>
+
+      <button type="submit" mat-flat-button color="primary">Submit</button>
+      </form>
+      <br>
+      <button mat-button color="warn" routerLink="/registration">Registration</button>
   </div>

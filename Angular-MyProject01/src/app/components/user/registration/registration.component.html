@@ -1,0 +1,23 @@
+<br>
+<h1 class="ml-3">Registration </h1>
+<br>
+<form class="m-2" novalidate [formGroup]="formGroup" (ngSubmit)="submitForm()">
+
+    <div class="form-group" *ngFor="let control of formGroup.userControls">
+        <label>{{control.label}}</label>
+        <input class="form-control" [class.border-success]="control.valid"
+            name="{{control.modelProperty}}"
+            formControlName="{{control.modelProperty}}" />
+        <ul class="text-danger list-unstyled"
+                *ngIf="(formSubmitted || control.dirty) && control.invalid">
+            <li *ngFor="let error of control.getValidationMessages()">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+
+    <button class="btn btn-primary" type="submit" 
+        [disabled]="formSubmitted && formGroup.invalid"
+        [class.btn-secondary]="formSubmitted && formGroup.invalid" >Create
+    </button>
+</form>

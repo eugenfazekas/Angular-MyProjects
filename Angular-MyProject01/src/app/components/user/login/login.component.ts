@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-import { LoginService } from 'src/app/shared/login.service';
+import { UserService } from 'src/app/shared/user.service';
+import { UserLoginFormModel } from 'src/app/model/user-login-form.model';
+
+
 
 @Component({
   selector: 'app-login',
@@ -10,29 +13,13 @@ import { LoginService } from 'src/app/shared/login.service';
 })
 export class LoginComponent {
 
-  constructor(private loginService: LoginService) {}
+  constructor(private userService: UserService ) {}
 
-  email = new FormControl ('', [Validators .required, Validators.email]);
-  password = new FormControl ('', [Validators .required]);
-  info: string;
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
+  userLoginFormModel: UserLoginFormModel = new UserLoginFormModel();
 
   submitForm(form: NgForm) {
     if(form.valid) {
-      this.loginService.loginUser(this.email.value ,this.password.value).subscribe(
-        res => {
-          this.info = res;
-        },
-        err => {
-          console.log(err)
-        }
-      );
+      this.userService.loginUser(this.userLoginFormModel.email.value ,this.userLoginFormModel.password.value);
     }
   }
 

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, BASE_URL } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/user/login/login.component';
@@ -10,14 +10,22 @@ import { ReactiveFormsModule } from  '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';  
 import { MatInputModule } from '@angular/material/input'; 
 import { MatButtonModule } from '@angular/material/button'; 
-import { LoginService } from './shared/login.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NxRouting } from './app.routing';
+import { RegistrationComponent } from './components/user/registration/registration.component';
+import { HeaderComponent } from './components/header/header/header.component';
+import { UserRepository } from "./repositorys/userRepository";
+import { UserRestDataSourceService } from './shared/user-rest-data-source.service';
+import { UserService } from './shared/user.service';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,9 +36,16 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    NxRouting
   ],
-  providers: [LoginService],
+  providers: [
+              UserRestDataSourceService,
+              UserService,
+              UserRepository,
+              { provide: BASE_URL, useValue: 'http://localhost:4800'}
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
