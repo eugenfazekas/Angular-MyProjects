@@ -1,11 +1,11 @@
 <br>
 <h1 class="ml-3">Registration </h1>
 <br>
-<form class="m-2" novalidate [formGroup]="formGroup" (ngSubmit)="submitForm()">
+<form class="m-4 p-4 col-6 border" novalidate [formGroup]="formGroup" (ngSubmit)="submitForm()">
 
     <div class="form-group" *ngFor="let control of formGroup.userControls">
         <label>{{control.label}}</label>
-        <input class="form-control" [class.border-success]="control.valid"
+        <input class="form-control" [class.border-success]="control.valid" [class.border-danger]="control.invalid && control.touched"
             name="{{control.modelProperty}}"
             formControlName="{{control.modelProperty}}" />
         <ul class="text-danger list-unstyled"
@@ -17,7 +17,7 @@
     </div>
 
     <button class="btn btn-primary" type="submit" 
-        [disabled]="formSubmitted && formGroup.invalid"
+        [disabled]="formSubmitted || formGroup.invalid"
         [class.btn-secondary]="formSubmitted && formGroup.invalid" >Create
     </button>
 </form>

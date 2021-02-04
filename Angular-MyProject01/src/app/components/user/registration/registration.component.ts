@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserModel } from 'src/app/model/user.model';
 import { UserRegistrationFormGroup } from 'src/app/model/userRegistrationForm.model';
 import { UserService } from 'src/app/shared/user.service';
+import { UserRestDataSourceService } from 'src/app/shared/user-rest-data-source.service';
 
 @Component({
   selector: 'app-registration',
@@ -10,19 +11,11 @@ import { UserService } from 'src/app/shared/user.service';
 })
 export class RegistrationComponent {
 
-constructor(private userService: UserService) { }
+constructor(private userService: UserService,private _userRestDataSourceService: UserRestDataSourceService) { }
 
 newUser: UserModel = new UserModel();
 
-formGroup: UserRegistrationFormGroup = new UserRegistrationFormGroup();
-
-getUser(key: string): UserModel {
-    return this.userService.getUser(key);
-}
-
-getUsers(): UserModel[] {
-    return this.userService.getUsers();
-}
+formGroup: UserRegistrationFormGroup = new UserRegistrationFormGroup(this._userRestDataSourceService);
 
 formSubmitted: boolean = false;
 
