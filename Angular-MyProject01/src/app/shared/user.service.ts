@@ -7,13 +7,6 @@ export class UserService {
 
   constructor(private userRestDataSource: UserRestDataSourceService) { }
 
-  loginUser(user: string, password: string) {
-    this.userRestDataSource.loginUser(user, password).subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    );
-  }
-
   saveUser(user: UserModel) {
     this.userRestDataSource.saveUser(user).subscribe(
       res =>  console.log(res),

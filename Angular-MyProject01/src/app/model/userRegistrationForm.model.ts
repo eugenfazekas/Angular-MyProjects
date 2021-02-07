@@ -36,8 +36,8 @@ export class UserRegistrationFormControl extends FormControl{
                         messages.push(`The ${this.label} field must be a valid email address`);
                         break;   
                     case "alreadyExist":
-                        messages.push(`Allready registered with this email
-                                     ${this.errors['alreadyExist'].actualValue} `);
+                        messages.push(`User with this email
+                             ${this.errors['alreadyExist'].actualValue} allready registered `);
                         break; 
                 }
             }

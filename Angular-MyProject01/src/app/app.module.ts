@@ -16,6 +16,11 @@ import { HeaderComponent } from './components/header/header/header.component';
 import { UserRestDataSourceService, BASE_URL } from './shared/user-rest-data-source.service';
 import { UserService } from './shared/user.service';
 import { NxRouting } from './app.routing';
+import { ArticlesComponent } from './components/auth/articles/articles.component';
+import { AuthService } from './shared/auth.service';
+import { HomeComponent } from './components/auth/home/home.component';
+import { AuthGuard} from './shared/auth-guard';
+import { SignToggleService } from './shared/sign-toggle.service';
 
 
 @NgModule({
@@ -24,6 +29,8 @@ import { NxRouting } from './app.routing';
     LoginComponent,
     RegistrationComponent,
     HeaderComponent,
+    ArticlesComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +48,9 @@ import { NxRouting } from './app.routing';
               UserRestDataSourceService,
               UserService,
               { provide: BASE_URL, useValue: 'http://localhost:4800'},
+              AuthService,
+              AuthGuard,
+              SignToggleService
             ],
   bootstrap: [AppComponent]
 })

@@ -9,6 +9,7 @@ export class UserModel {
 				 public	password?: string,
 				 public date_registered?: string,
 				 public	active?: boolean,
+				 public authorities?:  string[], 
 				 public articlesId?: string[]
 				) {}
 }

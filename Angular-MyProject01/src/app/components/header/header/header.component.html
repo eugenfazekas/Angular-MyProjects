@@ -1,6 +1,10 @@
-
 <div  >
-    <div class="login">
-      <h1 class="m-4 text-white">Cronoweb</h1>
+    <div class="big"> 
+      <h4 class="float-right m-2">John doe</h4>
+      <h4 class="float-right float-top m-2">Welcome</h4>
+      <h1 class="m-4 text-white float-none">Cronoweb</h1> 
     </div>
+      <button mat-raised-button color="primary" class="m-3" routerLink="">Home</button>
+      <button mat-raised-button color="primary" class="m-3" routerLink="/articles">Articles</button>
+      <button mat-raised-button color="primary" *ngIf="signToggleService.loggedIn" class="m-3 float-right"  (click)="signOut()" >Sign Out</button>
 </div>

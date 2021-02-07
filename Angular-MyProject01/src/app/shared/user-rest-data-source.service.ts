@@ -14,15 +14,6 @@ export class UserRestDataSourceService {
            this.baseURL = _baseURL
    }
 
-  loginUser(user: string, pass: string): Observable<any> {
-    
-    let params = new HttpParams()
-    .set('userName', user)
-    .set('password', pass);
-
-    return this._http.post(`${this.baseURL}/user/login`, params, {responseType: 'text'});
-  }
-
   saveUser(user: UserModel): Observable<UserModel> {
     return this._http.post<UserModel>(`${this.baseURL}/user/registerUser`,user);
   }
@@ -35,4 +26,4 @@ export class UserRestDataSourceService {
     return this._http.post<boolean>(`${this.baseURL}/user/userExistCheck`, param);
   }
 }
-
+ 
