@@ -2,19 +2,20 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_URL } from './user-rest-data-source.service';
-import { UserModel } from '../model/user.model';
+import { UserModel } from '../../model/user.model';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class AuthService {
 
   private baseURL: string ;
   private helper = new JwtHelperService();
-  public auth_token: string ;
+
  
 
-  constructor(private _http: HttpClient, @Inject(BASE_URL) _baseURL: string) { 
+  constructor(private _http: HttpClient, @Inject(BASE_URL) _baseURL: string, private tokenService: TokenService) { 
                        this.baseURL = _baseURL;
                   }               
   
@@ -24,7 +25,7 @@ export class AuthService {
 
               map( (response: any) => {
 
-                      this.auth_token = response.jwt ? response.jwt : null;
+                      this.tokenService.setToken(response.jwt);
                       const decodedToken = this.helper.decodeToken(response.jwt);
                       localStorage.setItem('token',response.jwt);
                            return true;
@@ -32,11 +33,5 @@ export class AuthService {
                 )
             );
   }
-  private getOptions() {
-    return {
-        headers: new HttpHeaders({
-            "Authorization": `Bearer<${this.auth_token}>`
-        })
-    }
-}
+  
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignToggleService } from 'src/app/shared/sign-toggle.service';
+import { SignButtonToggleService } from 'src/app/shared/user/sign-button-toggle.service';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { SignToggleService } from 'src/app/shared/sign-toggle.service';
 })
 export class HeaderComponent {
 
-  constructor(private router: Router, public signToggleService: SignToggleService) { 
+  constructor(private router: Router, public signToggleService: SignButtonToggleService) { 
 
   }
  
@@ -18,5 +18,7 @@ export class HeaderComponent {
     this.signToggleService.removeToken();
     this.router.navigateByUrl('login');
     this.signToggleService.setLoggedIn(false);
-                }
+    this.signToggleService.name = '' ;
+
+   }
 }

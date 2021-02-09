@@ -1,7 +1,7 @@
 import { Injectable,  Inject, InjectionToken } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserModel } from '../model/user.model';
+import { UserModel } from '../../model/user.model';
 
 export const BASE_URL = new InjectionToken<string>('BaseUrl');
 

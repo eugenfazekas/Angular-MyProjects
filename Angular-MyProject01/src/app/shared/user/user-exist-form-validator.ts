@@ -7,7 +7,7 @@ export class UserExistValidator {
 
   static userExistValidator(_userRestDataSourceService: UserRestDataSourceService): AsyncValidatorFn  {
     return (control: AbstractControl): Observable<ValidationErrors> => {
-      let val = control.value
+      let val = control.value;
       let err: ValidationErrors = {"alreadyExist" : {  "actualValue": val}};
             return ( _userRestDataSourceService.userExistCheck(val).pipe(map( res => {
                return  (res == true) ? err : null

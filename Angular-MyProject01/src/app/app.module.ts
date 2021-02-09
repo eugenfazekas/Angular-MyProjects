@@ -13,14 +13,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { HeaderComponent } from './components/header/header/header.component';
-import { UserRestDataSourceService, BASE_URL } from './shared/user-rest-data-source.service';
-import { UserService } from './shared/user.service';
+import { UserRestDataSourceService, BASE_URL } from './shared/user/user-rest-data-source.service';
+import { UserService } from './shared/user/user.service';
 import { NxRouting } from './app.routing';
 import { ArticlesComponent } from './components/auth/articles/articles.component';
-import { AuthService } from './shared/auth.service';
+import { AuthService } from './shared/user/auth.service';
 import { HomeComponent } from './components/auth/home/home.component';
-import { AuthGuard} from './shared/auth-guard';
-import { SignToggleService } from './shared/sign-toggle.service';
+import { AuthGuard} from './shared/user/auth-guard';
+import { SignButtonToggleService } from './shared/user/sign-button-toggle.service';
+import { ArticleRestDataSourceService } from './shared/article/article-rest-data-source.service';
+import { TokenService } from './shared/user/token.service';
+import { CategoriesRestDataSourceService } from './shared/categories/categories-rest-data-source.service';
+import { CategoriesService } from './shared/categories/categories.service';
+import { CategoriesComponent } from './components/admin/categories/categories.component';
 
 
 @NgModule({
@@ -31,6 +36,7 @@ import { SignToggleService } from './shared/sign-toggle.service';
     HeaderComponent,
     ArticlesComponent,
     HomeComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +56,11 @@ import { SignToggleService } from './shared/sign-toggle.service';
               { provide: BASE_URL, useValue: 'http://localhost:4800'},
               AuthService,
               AuthGuard,
-              SignToggleService
+              SignButtonToggleService,
+              TokenService,
+              ArticleRestDataSourceService,
+              CategoriesRestDataSourceService,
+              CategoriesService
             ],
   bootstrap: [AppComponent]
 })

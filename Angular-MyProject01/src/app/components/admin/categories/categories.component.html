@@ -1,0 +1,7 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Enter category</mat-label>
+        <input matInput placeholder="" formControlName="category" required>
+      </mat-form-field>
+    </form>
+    <button (click)="onSubmit()">Add category</button>
