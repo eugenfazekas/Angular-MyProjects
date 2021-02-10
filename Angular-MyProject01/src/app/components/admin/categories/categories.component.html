@@ -1,7 +1,18 @@
-<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-        <mat-label>Enter category</mat-label>
-        <input matInput placeholder="" formControlName="category" required>
-      </mat-form-field>
-    </form>
-    <button (click)="onSubmit()">Add category</button>
+
+<div>
+  <div>
+    <ul *ngFor="let  item of getCategories()">
+      <li>
+          {{item}}
+      </li>
+    </ul>
+  </div>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+          <mat-label>Enter category</mat-label>
+          <input matInput placeholder="" formControlName="category" required>
+        </mat-form-field>
+      </form>
+      <button (click)="onSubmit()">Add category</button>
+  </div>

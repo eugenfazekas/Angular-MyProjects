@@ -24,8 +24,9 @@ import { SignButtonToggleService } from './shared/user/sign-button-toggle.servic
 import { ArticleRestDataSourceService } from './shared/article/article-rest-data-source.service';
 import { TokenService } from './shared/user/token.service';
 import { CategoriesRestDataSourceService } from './shared/categories/categories-rest-data-source.service';
-import { CategoriesService } from './shared/categories/categories.service';
+import { CategoriesRepository } from './repositorys/categories.Repository';
 import { CategoriesComponent } from './components/admin/categories/categories.component';
+
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { CategoriesComponent } from './components/admin/categories/categories.co
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    
     NxRouting
   ],
   providers: [
@@ -60,7 +62,7 @@ import { CategoriesComponent } from './components/admin/categories/categories.co
               TokenService,
               ArticleRestDataSourceService,
               CategoriesRestDataSourceService,
-              CategoriesService
+              CategoriesRepository
             ],
   bootstrap: [AppComponent]
 })

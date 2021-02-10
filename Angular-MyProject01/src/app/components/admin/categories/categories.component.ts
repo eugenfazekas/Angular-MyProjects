@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoriesService } from 'src/app/shared/categories/categories.service';
+import { Component } from '@angular/core';
+import { CategoriesRepository } from 'src/app/repositorys/categories.Repository';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -9,14 +9,23 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CategoriesComponent {
 
-  private categories: string[] = this.categoriesService.getCategories();
+  private categories: string[] = []; 
 
-  constructor(private categoriesService: CategoriesService, private formBuilder: FormBuilder) { }
+  constructor(private categoriesRepository: CategoriesRepository, private formBuilder: FormBuilder) {
+     this.categoriesRepository.getCategories().subscribe(
+       res => this.categories = res,
+       err => console.log('Categories Component error gettin categories ',err)
+     );
+  }
+  
+  getCategories(): string[] {
+    return this.categories;
+  }
 
   categoryForm = this.formBuilder.group({ category: [''] });
   
   onSubmit() {
-
-    console.log(this.categoryForm.controls['category'].value)
+    console.log(this.categories) 
+  
   };
 }
