@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CategoriesRepository } from 'src/app/repositorys/categories.Repository';
-import { FormBuilder } from '@angular/forms';
+import { CategoriesRepository } from 'src/app/repositorys/categories-repository';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-categories',
@@ -9,23 +9,21 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CategoriesComponent {
 
-  private categories: string[] = []; 
-
-  constructor(private categoriesRepository: CategoriesRepository, private formBuilder: FormBuilder) {
-     this.categoriesRepository.getCategories().subscribe(
-       res => this.categories = res,
-       err => console.log('Categories Component error gettin categories ',err)
-     );
-  }
+  constructor(private categoriesRepository: CategoriesRepository, private formBuilder: FormBuilder) {}
   
   getCategories(): string[] {
-    return this.categories;
+    return this.categoriesRepository.getCategories();
   }
 
-  categoryForm = this.formBuilder.group({ category: [''] });
+  categoryForm = this.formBuilder.group({ category: ['',[Validators.required, Validators.minLength(3) ]]});
   
   onSubmit() {
-    console.log(this.categories) 
-  
+    if(this.categoryForm.valid){
+      this.categoriesRepository.addCategory(this.categoryForm.controls['category'].value)
+    }
   };
+
+  deleteCategory(item: string) {
+    this.categoriesRepository.deleteCategory(item);
+  }
 }

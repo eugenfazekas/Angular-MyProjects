@@ -10,8 +10,7 @@ export class TokenService {
   constructor() { this.getLocalToken(); }
 
   getLocalToken() {
-    this.auth_token = localStorage.getItem('token') != null ? localStorage.getItem('token') : '';  
-    console.log('token', this.auth_token)  
+    this.auth_token = localStorage.getItem('token') != null ? localStorage.getItem('token') : '';   
        return ;
    }
 
@@ -28,9 +27,10 @@ export class TokenService {
         return decodedToken != null ? decodedToken : '' ;
    }
 
-    getOptions() {
-console.log('get options', this.auth_token)
+  getOptions() {
     return new HttpHeaders()
-         .set('Authorization', `Bearer ${this.auth_token}`);
+         .set('Authorization', `Bearer ${this.auth_token}`)
          }
 }
+
+

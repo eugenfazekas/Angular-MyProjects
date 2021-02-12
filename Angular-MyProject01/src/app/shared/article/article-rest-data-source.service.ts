@@ -12,20 +12,23 @@ export class ArticleRestDataSourceService {
 
   constructor( private _http: HttpClient, @Inject(BASE_URL) _baseURL: string, private tokenService: TokenService ) {
            this.baseURL = _baseURL;
-
    }
 
-   auth_token: string ;
+   getArticles(): Observable<ArticleModel[]> {
+     console.log('Article token get options',this.getOptions())
+
+    return this._http.get<ArticleModel[]>(`${this.baseURL}/article/findAllArticles`,this.getOptions())
+   }
 
    saveArticle(article: ArticleModel): Observable<ArticleModel> {
     return this._http.post<ArticleModel>(`${this.baseURL}/article/saveArticle`,article, this.getOptions());
   }
  
-  private getOptions() {
-    return {
-        headers: new HttpHeaders({
-            "Authorization": `Bearer<${this.tokenService.getToken()}>`
-        })
-    }
-}
+    private getOptions() {
+      return {
+          headers: new HttpHeaders({
+              "Authorization": `Bearer ${this.tokenService.getToken()}`
+          })
+      }
+  }
 }

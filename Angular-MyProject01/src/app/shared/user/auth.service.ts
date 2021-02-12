@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BASE_URL } from './user-rest-data-source.service';
 import { UserModel } from '../../model/user.model';
 import { map } from 'rxjs/operators';

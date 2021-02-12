@@ -8,14 +8,14 @@ export class CategoriesRepository {
   private categories: string[] = [];
 
   constructor( private categoriesRestDataSourceService: CategoriesRestDataSourceService ) {   
-        categoriesRestDataSourceService.getCategories().subscribe(
+                  this.categoriesRestDataSourceService.getCategories().subscribe(
           res => this.categories = res,
           err => console.log('Error on getting categories: ',err)
         )
   }
 
     addCategory(category: string) {
-        
+        console.log('add category',category)
         this.categoriesRestDataSourceService.addCategory(category).subscribe(
           res => this.categories.push(res),
           err => console.log('Error on adding category: ',err)
@@ -30,9 +30,9 @@ export class CategoriesRepository {
          )
       }
 
-   getCategories(): Observable<string[]> {
+      getCategories(): string[] {
 
-      return this.categoriesRestDataSourceService.getCategories();
-    }
+        return this.categories;
+        }
 
 }

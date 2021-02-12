@@ -1,1 +1,28 @@
-<p>articles works!</p>
+<div class="col-10 border">
+
+          <div class="col-4  float-left">
+            <h2 class="m-4">Options Panel</h2>
+            <div>
+                <mat-form-field class="m-3"appearance="fill">
+                    <mat-label>Please select category</mat-label>
+                    <mat-select [(ngModel)]="categoryFilter">
+                    <mat-option>All Categories</mat-option>
+                    <mat-option *ngFor="let category of getCategories()" [value]="category">{{category}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        
+        </div>
+
+        <div class="float-left col-8 border-left">
+            <div class="col-12"  *ngFor="let article of getArticles() | nxCategoryFilterPipe:categoryFilter">
+                <h3 class="col-10">Title: {{article.title}}</h3>
+                <p>Content: {{article.content}}</p>
+                <p>Published: {{article.published_date}}</p>
+                <h5>Author: {{article.owner}}</h5>
+                <br>
+            <hr>
+            </div>
+        </div>
+    <div class="clearfix"></div>
+</div>

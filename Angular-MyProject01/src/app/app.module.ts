@@ -24,9 +24,12 @@ import { SignButtonToggleService } from './shared/user/sign-button-toggle.servic
 import { ArticleRestDataSourceService } from './shared/article/article-rest-data-source.service';
 import { TokenService } from './shared/user/token.service';
 import { CategoriesRestDataSourceService } from './shared/categories/categories-rest-data-source.service';
-import { CategoriesRepository } from './repositorys/categories.Repository';
+import { CategoriesRepository } from './repositorys/categories-repository';
 import { CategoriesComponent } from './components/admin/categories/categories.component';
-
+import { ArticlesRepository } from './repositorys/articles-repository';
+import { NxCategoryFilterPipe } from './shared/article/nx-category-filter.pipe';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -38,6 +41,7 @@ import { CategoriesComponent } from './components/admin/categories/categories.co
     ArticlesComponent,
     HomeComponent,
     CategoriesComponent,
+    NxCategoryFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,8 @@ import { CategoriesComponent } from './components/admin/categories/categories.co
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    
+    MatOptionModule,
+    MatSelectModule,
     NxRouting
   ],
   providers: [
@@ -61,6 +66,7 @@ import { CategoriesComponent } from './components/admin/categories/categories.co
               SignButtonToggleService,
               TokenService,
               ArticleRestDataSourceService,
+              ArticlesRepository,
               CategoriesRestDataSourceService,
               CategoriesRepository
             ],
