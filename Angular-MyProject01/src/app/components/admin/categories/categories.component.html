@@ -25,7 +25,7 @@
               <td >There are no categories</td>
           </tr>
               <tr class="border" *ngFor="let  item of getCategories()">
-                  <td >{{item}}</td>
+                  <td >{{item | titlecase}}</td>
                   <td></td>
                   <td>
                       <button class="btn btn-danger" (click)="deleteCategory(item)">

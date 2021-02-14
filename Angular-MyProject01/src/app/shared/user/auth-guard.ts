@@ -14,7 +14,7 @@ export class AuthGuard {
             let token = this.tokenServicervice.getToken();
             let decodedToken = this.jwt.decodeToken(token);
             if(!this.jwt.isTokenExpired(token) && decodedToken.authorities[0].authority == 'user' ) {
-              console.log('Auth');     return true ;
+                   return true ;
              } else {
               this.router.navigateByUrl('login');
                     return false ;
