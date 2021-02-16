@@ -13,25 +13,25 @@ export class ArticlesRepository {
     this.articleAuthors.add('All Authors');
           articleRestDataSource.getArticles().subscribe(
             res => {     
-               let array = res;
-               this.articles = array;
-               for (let model of array) {
-              this.articleAuthors.add(model.owner);      
-              }
-              } ,
+                let array = res;
+                this.articles = array;
+                for (let model of array) 
+                this.articleAuthors.add(model.owner);      
+                   },
             err => console.log('Error on getting Articles',err)
           );
   }
 
   getArticles(): ArticleModel[] {
-
     return this.articles;
   }
 
   getArticleAuthors(): Set<string> {
-
-    
-
     return this.articleAuthors;
   }
+
+  saveArticles(article: ArticleModel) {
+    this.articleRestDataSource.saveArticle(article);
+  }
+
 }

@@ -14,4 +14,4 @@ const routes: Routes = [
         { path: "categories", component: CategoriesComponent, canActivate: [AuthGuard] }
       ]
 
-export const NxRouting = RouterModule.forRoot(routes);
+export const NxRouting = RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' });

@@ -28,6 +28,7 @@ import { NxAuthorFilterPipe } from './shared/article/nx-author-filter.pipe';
 import { NxSearchFilterPipe } from './shared/article/nx-search-filter.pipe';
 import { NxPublishedDateFilterPipe } from './shared/article/nx-published-date-filter.pipe';
 import { NxMaterialModule } from './shared/nx-material/nx-material.module';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { NxMaterialModule } from './shared/nx-material/nx-material.module';
               ArticleRestDataSourceService,
               ArticlesRepository,
               CategoriesRestDataSourceService,
-              CategoriesRepository
+              CategoriesRepository,
+              { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
             ],
   bootstrap: [AppComponent]
 })

@@ -7,9 +7,21 @@ import { ArticleModel } from 'src/app/model/article.model';
 })
 export class NxPublishedDateFilterPipe implements PipeTransform {
 
-  transform(articles: ArticleModel[], owner: string): ArticleModel[] {
-    return owner == 'All Authors' ? articles : articles.filter(p => p.owner == owner);
-   
+  transform(articles: ArticleModel[], startDate: string, endDate: string): ArticleModel[] {
+
+    let startStringDate = new Date(startDate);
+    let startEpochDate = startStringDate.getTime();
+
+    let endStringDate = new Date(endDate);
+    let endEpochDate = endStringDate.getTime();
+
+    articles.sort((a,b) => a.published_date.localeCompare(b.published_date) )
+
+    return startDate == null ? articles : articles.filter(p => {
+            let articleDate = new Date(p.published_date);
+            let articleEpochDate = articleDate.getTime();
+              return articleEpochDate > startEpochDate  && articleEpochDate < endEpochDate;
+    });
 }
 
 }
