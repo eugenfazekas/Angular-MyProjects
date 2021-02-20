@@ -1,6 +1,9 @@
 <div class="col-14 ">
           <div class="col-3 mr-3 float-left">
             <h2 class="m-4">Options Panel</h2>
+                    <div class="ml-3">
+                    <button mat-raised-button class="ml-3" (click)="enableArticle()" color="accent" >Create Article</button>
+                    </div>
                 <br>
 
             <div>
@@ -85,16 +88,22 @@
                         <mat-error *ngIf="createArticleForm.controls['content'].hasError('required')">
                             Content is <strong>required</strong>
                           </mat-error>
-                      </mat-form-field> 
+                    </mat-form-field> 
+
+                    <mat-form-field class="col-8 clearfix">
+                        <mat-label>File Upload</mat-label>
+                        <ngx-mat-file-input formControlName="image" [multiple]="multiple" (change)="onChange($event)" name="fileInput" [accept]="accept">
+                        </ngx-mat-file-input>
+                     </mat-form-field>
 
                       <div class="ml-4 mb-2">
                         <button class="ml-4 mb-2 float-none" type="submit" color="primary" mat-raised-button>Submit</button>
-                   </div>
+                     </div>
 
                 </form>
-              
+                <img [src]="imagePath">
             </div>
-            <div class="col-12"  *ngFor="let article of getArticles() 
+            <div class="col-12 mt-2"  *ngFor="let article of getArticles() 
             | nxSearchFilterPipe: searchFilter.value | nxCategoryFilterPipe: categoryFilter 
             | nxAuthorFilterPipe: authorFilter 
             | nxPublishedDateFilterPipe: range.controls['start'].value : range.controls['end'].value ">
@@ -102,8 +111,10 @@
                 <p>Content: {{article.content}}</p>
                 <p>Published: {{article.published_date}}</p>
                 <h5 class="mb-4">Author: {{article.owner}}
-                    <button mat-raised-button class="float-right" (click)="enableArticle()" color="accent" >Create Article</button>
                 </h5>
+                <div *ngIf="article.image_title != 'no image' ">
+                    <img [src]="'http://localhost:4800/user/' + userId(article.image_title)+'/'+article.image_title+'.png'">
+               </div>
             <hr>
             </div>
         </div>

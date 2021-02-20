@@ -29,9 +29,20 @@ export class ArticlesRepository {
   getArticleAuthors(): Set<string> {
     return this.articleAuthors;
   }
+  
+  saveArticle(article: ArticleModel, image?: FormData) {
+    this.articleRestDataSource.saveArticle(article).subscribe(
+      res => this.articles.push(res),
+      err => console.log(err)
+    );
+  }
 
-  saveArticles(article: ArticleModel) {
-    this.articleRestDataSource.saveArticle(article);
+
+  saveImage(image?: FormData) {
+    this.articleRestDataSource.saveImage(image).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
   }
 
 }

@@ -6,7 +6,7 @@ export class ArticleModel {
         public title?: string,
         public owner?: string,
         public published_date?: string,
-        public	content?: string,
+        public content?: string,
         public image_title?: string
        ) {}
 }

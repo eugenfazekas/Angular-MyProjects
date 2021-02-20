@@ -11,16 +11,24 @@ export class AuthGuard {
  
       canActivate(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): boolean {
+       
             let token = this.tokenServicervice.getToken();
             let decodedToken = this.jwt.decodeToken(token);
-            if(!this.jwt.isTokenExpired(token) && decodedToken.authorities[0].authority == 'user' ) {
-                   return true ;
-             } else {
-              this.router.navigateByUrl('login');
-                    return false ;
-          }  
+            let userAuth: boolean = false;
+            if(token != '') {
+              for(let auth of decodedToken.authorities){
+                if(auth.authority = 'user'){
+                  userAuth = true;
+                }
+              }
+            }
+            if(!this.jwt.isTokenExpired(token) && userAuth ) {
+              return true ;
+        } else {
+          token = '';
+         this.router.navigateByUrl('login');
+               return false ;
       }
   }
- 
-
+}
 

@@ -24,7 +24,7 @@ export class SignButtonToggleService {
 
   removeToken() {
     localStorage.removeItem('token');
-  
+    this.tokenService.setToken('');
   }
 
   setLoggedIn(status: boolean){

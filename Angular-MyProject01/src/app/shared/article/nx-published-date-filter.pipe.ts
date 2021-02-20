@@ -15,7 +15,7 @@ export class NxPublishedDateFilterPipe implements PipeTransform {
     let endStringDate = new Date(endDate);
     let endEpochDate = endStringDate.getTime();
 
-    articles.sort((a,b) => a.published_date.localeCompare(b.published_date) )
+    articles.sort((a,b) => b.published_date.localeCompare(a.published_date) )
 
     return startDate == null ? articles : articles.filter(p => {
             let articleDate = new Date(p.published_date);

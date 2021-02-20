@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BASE_URL } from '../user/user-rest-data-source.service';
 import { ArticleModel } from 'src/app/model/article.model';
 import { Observable } from 'rxjs';
@@ -15,15 +15,19 @@ export class ArticleRestDataSourceService {
    }
 
    getArticles(): Observable<ArticleModel[]> {
-
-
     return this._http.get<ArticleModel[]>(`${this.baseURL}/article/findAllArticles`,this.getOptions())
    }
+   
 
    saveArticle(article: ArticleModel): Observable<ArticleModel> {
     return this._http.post<ArticleModel>(`${this.baseURL}/article/saveArticle`,article, this.getOptions());
   }
- 
+
+
+  saveImage(image: FormData): Observable<any> {
+    return this._http.post(`${this.baseURL}/article/saveImage`,image, this.getOptions());
+  }
+
     private getOptions() {
       return {
           headers: new HttpHeaders({
