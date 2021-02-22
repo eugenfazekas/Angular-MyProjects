@@ -10,24 +10,23 @@ export class AuthGuard {
   constructor(private tokenServicervice: TokenService, private router: Router) { }
  
       canActivate(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot): boolean {
-       
-            let token = this.tokenServicervice.getToken();
-            let decodedToken = this.jwt.decodeToken(token);
-            let userAuth: boolean = false;
-            if(token != '') {
-              for(let auth of decodedToken.authorities){
-                if(auth.authority = 'user'){
-                  userAuth = true;
+          state: RouterStateSnapshot): boolean {    
+              let token = this.tokenServicervice.getToken();
+              let decodedToken = this.jwt.decodeToken(token);
+              let userAuth: boolean = false;
+              if(token != '') {
+                for(let auth of decodedToken.authorities){
+                  if(auth.authority = 'user'){
+                    userAuth = true;
+                  }
                 }
               }
-            }
-            if(!this.jwt.isTokenExpired(token) && userAuth ) {
-              return true ;
-        } else {
-          token = '';
-         this.router.navigateByUrl('login');
-               return false ;
+              if(!this.jwt.isTokenExpired(token) && userAuth ) {
+                return true ;
+          } else {
+            token = '';
+          this.router.navigateByUrl('login');
+                return false ;
       }
   }
 }

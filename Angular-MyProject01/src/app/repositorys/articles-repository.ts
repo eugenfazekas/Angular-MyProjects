@@ -37,7 +37,6 @@ export class ArticlesRepository {
     );
   }
 
-
   saveImage(image?: FormData) {
     this.articleRestDataSource.saveImage(image).subscribe(
       res => console.log(res),
@@ -45,4 +44,9 @@ export class ArticlesRepository {
     );
   }
 
+  deleteArticle(articleId: string){
+    this.articleRestDataSource.deleteArticle(articleId).subscribe(
+      res => this.articles.splice(this.articles.findIndex(o => articleId == o.id ), 1),
+    )
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ArticlesRepository } from 'src/app/repositorys/articles-repository';
 import { ArticleModel } from 'src/app/model/article.model';
 import { CategoriesRepository } from 'src/app/repositorys/categories-repository';
@@ -6,13 +6,14 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { TokenService } from 'src/app/shared/user/token.service';
 import { formatDate } from '@angular/common';
 import * as EventEmitter from 'events';
+import { BASE_URL } from 'src/app/shared/user/user-rest-data-source.service';
 
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.css']
 })
-export class ArticlesComponent {
+export class ArticlesComponent implements OnInit {
 
   createArticle: boolean = false;
   categoryFilter: string = 'All Categories';
@@ -20,15 +21,27 @@ export class ArticlesComponent {
   newArticle: ArticleModel = new ArticleModel();
   accept:string[] = ['.jpg','.png','.jpeg'];
   multiple:boolean = false;
-  base64;
-  imagePath;
+  imageBlob: Blob;
+  imageBase64;
+  admincheck: boolean = false;
+
   constructor(private articleRepository: ArticlesRepository, private categorisRepository: CategoriesRepository, 
-              private formBuilder: FormBuilder, private tokenService: TokenService) { }
+              private formBuilder: FormBuilder, private tokenService: TokenService,@Inject(BASE_URL) _baseURL: string) {
+                this._url = _baseURL;
+               }
+
+  ngOnInit() {
+
+    this.adminVerify();
+ 
+  }
 
   searchForm = this.formBuilder.group({ search: ['',[ Validators.minLength(3) ]]});
 
   range = this.formBuilder.group({start: new FormControl(), end: new FormControl() });
-
+  _url: string; 
+  imageWidths: number = 500;
+  
   createArticleForm = this.formBuilder.group({ 
                   category: ['',[ Validators.minLength(3),Validators.required ]],
                   title: ['',[ Validators.minLength(3),Validators.required ]],
@@ -38,8 +51,7 @@ export class ArticlesComponent {
   onChange(event) {
 
     let item = this.createArticleForm.controls['image'].value;
-    console.log(item)
-    this.fileReader(item).then(res => this.compressImage(res,500).then(res => {this.base64 = this.b64toBlob(res); this.imagePath = res}))
+    this.fileReader(item).then(res => this.compressImage(res, this.imageWidths).then(res => { this.imageBlob = this.b64toBlob(res); this.imageBase64 = res}))
   }
 
   fileReader(item) {
@@ -119,7 +131,7 @@ export class ArticlesComponent {
                       this.articleRepository.saveArticle(this.newArticle);
                         if(this.createArticleForm.controls['image'].value) {
                           let formData = new FormData();
-                          formData.append('fileInput', this.base64, this.getImageTitle(id));
+                          formData.append('fileInput', this.imageBlob, this.getImageTitle(id));
                           this.articleRepository.saveImage(formData);
                       }
                       this.createArticle = false;
@@ -128,10 +140,19 @@ export class ArticlesComponent {
   }
 
   userId(title: string): string {
+   let id: string[] = title.split("Ω")
+     return id[0];
+  }
 
-   let id = title.substring(0,title.length-20)
-    return id;
+  deleteArticle(articleId: string) {
+    this.articleRepository.deleteArticle(articleId);
   }
   
+  adminVerify() {
+    let authorities = this.tokenService.getDecodedToken().authorities;
+    for(let auth of authorities){
+      auth.authority == 'admin' ? this.admincheck = true : null;
+    }
+  }
 }
 

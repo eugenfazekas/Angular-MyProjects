@@ -101,19 +101,22 @@
                      </div>
 
                 </form>
-                <img [src]="imagePath">
+                <img [src]="imageBase64">
             </div>
             <div class="col-12 mt-2"  *ngFor="let article of getArticles() 
             | nxSearchFilterPipe: searchFilter.value | nxCategoryFilterPipe: categoryFilter 
             | nxAuthorFilterPipe: authorFilter 
             | nxPublishedDateFilterPipe: range.controls['start'].value : range.controls['end'].value ">
+            <div *ngIf="admincheck">
+                <button  mat-raised-button color="warn" (click)="deleteArticle(article.id)" class="float-right">Delete Article</button>
+            </div>
                 <h3 class="col-10">Title: {{article.title}}</h3>
                 <p>Content: {{article.content}}</p>
                 <p>Published: {{article.published_date}}</p>
                 <h5 class="mb-4">Author: {{article.owner}}
                 </h5>
-                <div *ngIf="article.image_title != 'no image' ">
-                    <img [src]="'http://localhost:4800/user/' + userId(article.image_title)+'/'+article.image_title+'.png'">
+                <div *ngIf="article.image_title != 'no image' && article.image_title != null">
+                    <img [src]="_url + '/user/' + userId(article.image_title)+'/'+article.image_title+'.png'">
                </div>
             <hr>
             </div>

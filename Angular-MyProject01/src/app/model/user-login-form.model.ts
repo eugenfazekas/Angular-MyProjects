@@ -2,8 +2,8 @@ import { FormControl,Validators } from '@angular/forms';
 
 export class UserLoginFormModel {
 
-    email = new FormControl ('', [Validators .required, Validators.email]);
-    password = new FormControl ('', [Validators .required]);
+   public email = new FormControl ('', [Validators .required, Validators.email]);
+   public  password = new FormControl ('', [Validators .required]);
     
     getEmailErrorMessage() {
       if (this.email.hasError('required')) {
@@ -18,6 +18,6 @@ export class UserLoginFormModel {
           return 'You must enter a password';
         }
     
-        return this.password.hasError('password') ? 'Not a valid email' : '';
+        return this.password.hasError('password') ? 'Not a valid password' : '';
       }
 }

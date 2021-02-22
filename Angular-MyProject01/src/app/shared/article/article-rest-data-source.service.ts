@@ -10,29 +10,29 @@ export class ArticleRestDataSourceService {
 
   private baseURL: string ;
 
+  private tokenHeader = new HttpHeaders().set('Authorization', `Bearer ${this.tokenService.getToken()}`);
+  
+  private param(param: string) {
+        return new HttpParams().set('articleId', param)
+  }
+
   constructor( private _http: HttpClient, @Inject(BASE_URL) _baseURL: string, private tokenService: TokenService ) {
            this.baseURL = _baseURL;
    }
 
    getArticles(): Observable<ArticleModel[]> {
-    return this._http.get<ArticleModel[]>(`${this.baseURL}/article/findAllArticles`,this.getOptions())
+    return this._http.get<ArticleModel[]>(`${this.baseURL}/article/findAllArticles`,{'headers': this.tokenHeader})
    }
    
-
    saveArticle(article: ArticleModel): Observable<ArticleModel> {
-    return this._http.post<ArticleModel>(`${this.baseURL}/article/saveArticle`,article, this.getOptions());
+    return this._http.post<ArticleModel>(`${this.baseURL}/article/saveArticle`,article, {'headers': this.tokenHeader});
   }
 
-
-  saveImage(image: FormData): Observable<any> {
-    return this._http.post(`${this.baseURL}/article/saveImage`,image, this.getOptions());
+   saveImage(image: FormData): Observable<string> {
+    return this._http.post(`${this.baseURL}/article/saveImage`,image, {'headers': this.tokenHeader, responseType: 'text'});
   }
 
-    private getOptions() {
-      return {
-          headers: new HttpHeaders({
-              "Authorization": `Bearer ${this.tokenService.getToken()}`
-          })
-      }
-  }
+   deleteArticle(articleId: string):Observable<string> {
+     return this._http.post(`${this.baseURL}/admin/deleteArticle`,{},{'headers': this.tokenHeader, 'params' : this.param(articleId) , responseType: 'text'})
+   }
 }

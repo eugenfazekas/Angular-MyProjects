@@ -17,9 +17,6 @@ export class CategoriesRestDataSourceService {
         return new HttpParams().set('category', param)
   }
 
-
- 
-
   constructor( private _http: HttpClient, @Inject(BASE_URL) _baseURL: string, private tokenService: TokenService ) {
     this.baseURL = _baseURL;
   }

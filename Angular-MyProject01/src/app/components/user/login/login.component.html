@@ -1,6 +1,6 @@
 
   <div class="text-center">
-    <form  novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+    <form  novalidate [formGroup]="loginForm" (ngSubmit)="submitForm()">
       <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="pat@example.com" [formControl]="userLoginFormModel.email" required>

@@ -25,7 +25,7 @@ formSubmitted: boolean = false;
             .forEach(c => this.newUser[c] = this.formGroup.controls[c].value);
         this.formSubmitted = true;
         if (this.formGroup.valid) {
-            this.userService.saveUser(this.newUser).then(
+            this.userService.saveUser(this.newUser).subscribe(
                 res => this.router.navigateByUrl('')
             )
         }

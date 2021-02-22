@@ -19,6 +19,6 @@ export class HeaderComponent {
     this.router.navigateByUrl('login');
     this.signToggleService.setLoggedIn(false);
     this.signToggleService.name = '' ;
-
+    window.location.reload();
    }
 }
