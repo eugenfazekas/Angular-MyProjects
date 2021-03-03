@@ -1,0 +1,102 @@
+<div class=" m-3 p-4  border"> 
+
+    <div class=" col-6 float-right" *ngIf="editProfile">
+        <div >
+            <form [formGroup]="editUserDetailsForm" (ngSubmit)="submitForm()">
+
+                    <mat-form-field appearance="fill">
+                    <mat-label>Enter FirstName</mat-label>
+                    <input matInput placeholder="" formControlName="firstName">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                    <mat-label>Enter LastName</mat-label>
+                    <input matInput placeholder="" formControlName="lastName">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                    <mat-label>Change Email</mat-label>
+                    <input matInput placeholder="" formControlName="email">
+                    </mat-form-field>
+
+                    <p class="clearfix"></p>
+                    <div class="float-left">
+                        <mat-form-field  appearance="fill">
+                        <mat-label>Change Password</mat-label>
+                        <input matInput placeholder="" formControlName="password">
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field appearance="fill">
+                    <mat-label>Confirm Password</mat-label>
+                    <input matInput placeholder="" formControlName="confirmPassword">
+                    </mat-form-field>
+
+                    <div formGroupName="address">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Selected Country</mat-label>
+                            <mat-select ([ngModel])="userModel.address.country" formControlName="country">
+                                <mat-option value="Romania">Romania</mat-option>
+                                <mat-option value="Hungary">Hungary</mat-option>
+                                <mat-option value="UK">UK</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter You're City</mat-label>
+                            <input matInput placeholder="" formControlName="city">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter You're Street</mat-label>
+                            <input matInput placeholder="" formControlName="street">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter You're Street Number</mat-label>
+                            <input matInput placeholder="" formControlName="number">
+                        </mat-form-field>
+
+                    </div>
+                    <button mat-raised-button color="accent" class="ml-4 mt-2" (click)="enableEdit()"
+                    [disabled]="formSubmitted || editUserDetailsForm.invalid"
+                    [class.btn-secondary]="formSubmitted && editUserDetailsForm.invalid"
+                    >Update Profile</button>
+                </form>
+        </div>
+    </div> 
+
+
+    <div class="cBorder height detailsContainer col-5">
+
+        <div class="p-2">
+            <h1 class="float-left">My Profile</h1>
+            <button mat-raised-button color="warn" class="ml-4 mt-2" (click)="enableEdit()">Edit Profile</button>
+        </div>
+        <div class="p-4 ">
+            
+                <div>
+                    <h3>Account Details</h3>
+                    <table class="m-4">
+                        <tr><td>FirstName:</td><td>{{getUser()?.firstName}}</td></tr>
+                        <tr><td>LastName:</td><td>{{getUser()?.lastName}}</td></tr>
+                        <tr><td>Email:</td><td>{{getUser()?.email}}</td></tr>
+                    </table>
+                </div>  
+            <br>
+                <div> 
+                    <h3>User Address<Address></Address></h3>
+                    <table class="m-4 ">
+                        <tr><td>Country:</td><td>{{getUser()?.address.country}}</td></tr>
+                        <tr><td>City:</td><td>{{getUser()?.address.city}}</td></tr>
+                        <tr><td>Street:</td><td>{{getUser()?.address.street}}</td></tr>
+                        <tr><td>Nr:</td><td>{{getUser()?.address.number}}</td></tr>
+                    </table>
+                </div>
+
+           </div>
+    </div>
+
+     
+</div>

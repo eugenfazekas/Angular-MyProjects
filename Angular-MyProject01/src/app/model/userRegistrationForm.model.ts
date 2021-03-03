@@ -33,7 +33,7 @@ export class UserRegistrationFormControl extends FormControl{
                             ${this.errors['maxlength'].requiredLength} characters`);
                         break;
                     case "pattern":
-                        messages.push(`The ${this.label} field must be a valid email address`);
+                        messages.push(`The ${this.label} field must be a valid ${this.label}`);
                         break;   
                     case "alreadyExist":
                         messages.push(`User with this email
@@ -89,7 +89,7 @@ export class UserRegistrationFormGroup extends FormGroup {
             .map(k => this.controls[k] as UserRegistrationFormControl);
     }
 
-        getValidationMessages(name: string): string[] {
+    getValidationMessages(name: string): string[] {
             return (this.controls['firstName'] as UserRegistrationFormControl).getValidationMessages();
         }
     }

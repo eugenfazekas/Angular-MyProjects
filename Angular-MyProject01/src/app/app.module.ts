@@ -30,6 +30,8 @@ import { NxPublishedDateFilterPipe } from './shared/article/nx-published-date-fi
 import { NxMaterialModule } from './shared/nx-material/nx-material.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { EditUserDetailsComponent } from './components/user/edit-user-details/edit-user-details.component';
+import { PasswordService } from './shared/user/password.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     NxCategoryFilterPipe,
     NxAuthorFilterPipe,
     NxSearchFilterPipe,
-    NxPublishedDateFilterPipe
+    NxPublishedDateFilterPipe,
+    EditUserDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
               CategoriesRestDataSourceService,
               CategoriesRepository,
               { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+              PasswordService,
             ],
   bootstrap: [AppComponent]
 })

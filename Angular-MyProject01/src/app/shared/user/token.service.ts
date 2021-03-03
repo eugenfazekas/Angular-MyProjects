@@ -27,6 +27,16 @@ export class TokenService {
         return decodedToken != null ? decodedToken : '' ;
    }
 
+   getFullname() {
+    let decodedToken = this.jwt.decodeToken(this.auth_token);
+    return decodedToken != null ? decodedToken.fullName : '' ;
+   }
+
+   getEmail() {
+    let decodedToken = this.jwt.decodeToken(this.auth_token);
+    return decodedToken != null ? decodedToken.sub : '' ;
+   }
+
   getOptions() {
     return new HttpHeaders()
          .set('Authorization', `Bearer ${this.auth_token}`)

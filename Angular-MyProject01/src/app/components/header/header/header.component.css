@@ -1,8 +1,11 @@
-*{ margin: 0px; padding:0px;}
+*{
+    padding:0px;
+    margin: 0px; 
+}
 
 .big{
     background-color:#0275d8;
     width: auto;
-    height: 150px;
-    margin-top: -2.2%;
+    height: 200px;
+
 }

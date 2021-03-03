@@ -1,3 +1,5 @@
+import { UserAddress } from "./user.address";
+
 export class UserModel {
  				 
 	constructor(
@@ -10,6 +12,7 @@ export class UserModel {
 				 public date_registered?: string,
 				 public	active?: boolean,
 				 public authorities?:  string[], 
-				 public articlesId?: string[]
+				 public articlesId?: string[],
+				 public address?: UserAddress
 				) {}
 }
