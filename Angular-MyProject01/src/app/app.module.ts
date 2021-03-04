@@ -31,7 +31,6 @@ import { NxMaterialModule } from './shared/nx-material/nx-material.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { EditUserDetailsComponent } from './components/user/edit-user-details/edit-user-details.component';
-import { PasswordService } from './shared/user/password.service';
 
 @NgModule({
   declarations: [
@@ -71,8 +70,7 @@ import { PasswordService } from './shared/user/password.service';
               ArticlesRepository,
               CategoriesRestDataSourceService,
               CategoriesRepository,
-              { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-              PasswordService,
+              { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
             ],
   bootstrap: [AppComponent]
 })

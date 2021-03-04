@@ -17,7 +17,6 @@ export class SignButtonToggleService {
   public loggedIn: boolean = localStorage.getItem('token') != null ? true : false; 
 
   setFullname() {
-  
     this.token = this.tokenService.getDecodedToken();
     this.name = `Welcome ${this.token.fullName}` 
   }

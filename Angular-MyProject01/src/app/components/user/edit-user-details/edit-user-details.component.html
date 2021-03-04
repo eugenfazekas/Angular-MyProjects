@@ -19,19 +19,26 @@
                     <input matInput placeholder="" formControlName="email">
                     </mat-form-field>
 
-                    <p class="clearfix"></p>
-                    <div class="float-left">
-                        <mat-form-field  appearance="fill">
-                        <mat-label>Change Password</mat-label>
-                        <input matInput placeholder="" formControlName="password">
+                    <div>
+                        <p class="clearfix"></p>
+                        <div class="float-left">
+                            <mat-form-field  appearance="fill">
+                            <mat-label>Change Password</mat-label>
+                            <input matInput placeholder="" formControlName="password" [type]="hide ? 'password' : 'text'">
+                            <small *ngIf="editUserDetailsForm.errors ?.passwordsNotEqual" class="text-danger">Passwords do not match</small>
+                            </mat-form-field>
+                        </div>
+                
+                        <mat-form-field appearance="fill">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput placeholder="" formControlName="confirmPassword" [type]="hide ? 'password' : 'text'">
+                        <small *ngIf="editUserDetailsForm.errors ?.passwordsNotEqual" class="text-danger">Passwords do not match</small>
                         </mat-form-field>
+
+                        <mat-icon matSuffix  class="ml-3"  (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </div>
 
-                    <mat-form-field appearance="fill">
-                    <mat-label>Confirm Password</mat-label>
-                    <input matInput placeholder="" formControlName="confirmPassword">
-                    </mat-form-field>
-
+                    <br>
                     <div formGroupName="address">
 
                         <mat-form-field appearance="fill">
@@ -67,7 +74,6 @@
         </div>
     </div> 
 
-
     <div class="cBorder height detailsContainer col-5">
 
         <div class="p-2">
@@ -79,19 +85,19 @@
                 <div>
                     <h3>Account Details</h3>
                     <table class="m-4">
-                        <tr><td>FirstName:</td><td>{{getUser()?.firstName}}</td></tr>
-                        <tr><td>LastName:</td><td>{{getUser()?.lastName}}</td></tr>
-                        <tr><td>Email:</td><td>{{getUser()?.email}}</td></tr>
+                        <tr><td>FirstName:</td><td>{{userModel?.firstName}}</td></tr>
+                        <tr><td>LastName:</td><td>{{userModel?.lastName}}</td></tr>
+                        <tr><td>Email:</td><td>{{userModel?.email}}</td></tr>
                     </table>
                 </div>  
             <br>
                 <div> 
                     <h3>User Address<Address></Address></h3>
                     <table class="m-4 ">
-                        <tr><td>Country:</td><td>{{getUser()?.address.country}}</td></tr>
-                        <tr><td>City:</td><td>{{getUser()?.address.city}}</td></tr>
-                        <tr><td>Street:</td><td>{{getUser()?.address.street}}</td></tr>
-                        <tr><td>Nr:</td><td>{{getUser()?.address.number}}</td></tr>
+                        <tr><td>Country:</td><td>{{userModel?.address.country}}</td></tr>
+                        <tr><td>City:</td><td>{{userModel?.address.city}}</td></tr>
+                        <tr><td>Street:</td><td>{{userModel?.address.street}}</td></tr>
+                        <tr><td>Nr:</td><td>{{userModel?.address.number}}</td></tr>
                     </table>
                 </div>
 
