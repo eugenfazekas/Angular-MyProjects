@@ -30,5 +30,7 @@ formSubmitted: boolean = false;
             )
         }
     } 
-
+    test() {
+        console.log(this.formGroup.controls['password'])
+    }
 }

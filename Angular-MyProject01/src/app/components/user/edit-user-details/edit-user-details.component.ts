@@ -23,10 +23,10 @@ export class EditUserDetailsComponent {
               this.editUserDetailsForm.controls['firstName'].patchValue(res.firstName);
               this.editUserDetailsForm.controls['lastName'].patchValue(res.lastName);
               this.editUserDetailsForm.controls['email'].patchValue(res.email);
-              this.editUserDetailsForm.patchValue({address : { country : res.address.country }});
-              this.editUserDetailsForm.patchValue({address : { city : res.address.city }});
-              this.editUserDetailsForm.patchValue({address : { street : res.address.street }});
-              this.editUserDetailsForm.patchValue({address : { number : res.address.number }});
+              res.address ? this.editUserDetailsForm.patchValue({address : { country : res.address.country }}) : '';
+              res.address ? this.editUserDetailsForm.patchValue({address : { city : res.address.city }}): '';
+              res.address ? this.editUserDetailsForm.patchValue({address : { street : res.address.street }}): '';
+              res.address ? this.editUserDetailsForm.patchValue({address : { number : res.address.number }}): '';
       }
     )
   }
@@ -38,7 +38,7 @@ export class EditUserDetailsComponent {
             password: ['',[ Validators.minLength(5)]],
             confirmPassword: ['',[ Validators.minLength(5),  ]],
             address : this.formBuilder.group({
-                country: ['',[ Validators.minLength(3) ]],
+                country: ['',[ Validators.minLength(2) ]],
                 city: ['',[ Validators.minLength(3) ]],
                 street: ['',[ Validators.minLength(3) ]],
                 number: ['',[ Validators.minLength(1) ]],
@@ -57,6 +57,7 @@ export class EditUserDetailsComponent {
           res => console.log(res)
         );
         this.formSubmitted = true;
+        this.editProfile = false;
       }
     }   
 }
