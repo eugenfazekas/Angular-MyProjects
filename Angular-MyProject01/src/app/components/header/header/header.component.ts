@@ -1,6 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignButtonToggleService } from 'src/app/shared/user/sign-button-toggle.service';
+import { TokenService } from 'src/app/shared/user/token.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,10 +12,13 @@ import { SignButtonToggleService } from 'src/app/shared/user/sign-button-toggle.
 })
 export class HeaderComponent {
 
-  constructor(private router: Router, public signToggleService: SignButtonToggleService) { 
+  subscription: Subscription;
+  admin: boolean;
+  constructor(private router: Router, public signToggleService: SignButtonToggleService,private tokenService: TokenService) {
+    this.admin = tokenService.getAdmin();
+    this.subscription = this.tokenService.getAdminObs().subscribe(res => this.admin = res );
+   }
 
-  }
- 
   signOut() {
     this.signToggleService.removeToken();
     this.router.navigateByUrl('login');
@@ -21,4 +26,5 @@ export class HeaderComponent {
     this.signToggleService.name = '' ;
     window.location.reload();
    }
+
 }

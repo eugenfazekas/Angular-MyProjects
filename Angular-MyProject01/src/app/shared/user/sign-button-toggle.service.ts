@@ -18,7 +18,8 @@ export class SignButtonToggleService {
 
   setFullname() {
     this.token = this.tokenService.getDecodedToken();
-    this.name = `Welcome ${this.token.fullName}` 
+    this.name = `Welcome ${this.token.fullName}`;
+    this.tokenService.adminVerify();
   }
 
   removeToken() {
