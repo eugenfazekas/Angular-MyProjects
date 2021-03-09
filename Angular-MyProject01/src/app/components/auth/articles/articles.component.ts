@@ -7,6 +7,7 @@ import { TokenService } from 'src/app/shared/user/token.service';
 import { formatDate } from '@angular/common';
 import * as EventEmitter from 'events';
 import { BASE_URL } from 'src/app/shared/user/user-rest-data-source.service';
+import { LogService } from 'src/app/shared/log.service';
 
 @Component({
   selector: 'app-articles',
@@ -26,7 +27,9 @@ export class ArticlesComponent implements OnInit {
   admincheck: boolean = false;
 
   constructor(private articleRepository: ArticlesRepository, private categorisRepository: CategoriesRepository, 
-              private formBuilder: FormBuilder, private tokenService: TokenService,@Inject(BASE_URL) _baseURL: string) {
+              private formBuilder: FormBuilder, private tokenService: TokenService,@Inject(BASE_URL) _baseURL: string,
+              private logservice: LogService) {
+                this.logservice.logDebugMessage(String('ArticlesComponent constructor: '));
                 this._url = _baseURL;
                }
 
@@ -49,12 +52,13 @@ export class ArticlesComponent implements OnInit {
                   image: ['',[Validators.pattern('[^Ω]+')]]
                                           });                          
   onChange(event) {
-
+    this.logservice.logDebugMessage(String('ArticlesComponent onChange() '));
     let item = this.createArticleForm.controls['image'].value;
     this.fileReader(item).then(res => this.compressImage(res, this.imageWidths).then(res => { this.imageBlob = this.b64toBlob(res); this.imageBase64 = res}))
   }
 
   fileReader(item) {
+    this.logservice.logDebugMessage(String('ArticlesComponent fileReader() '));
     return new Promise( (res)  => {
             let reader = new FileReader();
             reader.readAsDataURL(item);
@@ -67,6 +71,7 @@ export class ArticlesComponent implements OnInit {
   }
 
  compressImage(src,width) {
+  this.logservice.logDebugMessage(String('ArticlesComponent compressImage() '));
       return new Promise((res, rej) => {
         const img = new Image();
         img.src = src;
@@ -84,7 +89,8 @@ export class ArticlesComponent implements OnInit {
       })
     }
 
-  b64toBlob(dataURI) {     
+  b64toBlob(dataURI) { 
+    this.logservice.logDebugMessage(String('ArticlesComponent b64toBlob() '));    
         let byteString = atob(dataURI.split(',')[1]);
         let ab = new ArrayBuffer(byteString.length);
         let ia = new Uint8Array(ab);
@@ -96,26 +102,32 @@ export class ArticlesComponent implements OnInit {
     } 
 
   getArticles(): ArticleModel[] {
+    this.logservice.logDebugMessage(String('ArticlesComponent getArticles() '));
     return this.articleRepository.getArticles();
   }
 
   getCategories(): string[] {
+    this.logservice.logDebugMessage(String('ArticlesComponent getCategories() '));
     return this.categorisRepository.getCategories();
   }
 
   getAuthors(): Set<string> {
+    this.logservice.logDebugMessage(String('ArticlesComponent getAuthors() '));
     return this.articleRepository.getArticleAuthors();
   }
 
   enableArticle() {
+    this.logservice.logDebugMessage(String('ArticlesComponent enableArticle() '));
      this.createArticle = true;
   }
 
-  getUserCategories(): string[] {   
+  getUserCategories(): string[] {  
+    this.logservice.logDebugMessage(String('ArticlesComponent getUserCategories() ')); 
     return this.categorisRepository.getCategories().filter(res => res != 'All Categories');
   }
 
-  getImageTitle(name: string): string { 
+  getImageTitle(name: string): string {
+    this.logservice.logDebugMessage(String('ArticlesComponent getImageTitle() ')); 
     let image_title = name + 'Ω' + formatDate(new Date(),'yyyy.MM.dd HH-mm-ss','en');
     return image_title;
   }
@@ -127,6 +139,7 @@ export class ArticlesComponent implements OnInit {
                 let id =  this.tokenService.getDecodedToken().id;  
                 this.newArticle.owner = this.tokenService.getDecodedToken().fullName; 
                 if(this.createArticleForm.valid) {
+                  this.logservice.logDebugMessage(String('ArticlesComponent submitForm() '));
                       this.newArticle.image_title = this.createArticleForm.controls['image'].value != '' ? this.getImageTitle(id): null;
                       this.articleRepository.saveArticle(this.newArticle);
                         if(this.createArticleForm.controls['image'].value) {
@@ -140,19 +153,20 @@ export class ArticlesComponent implements OnInit {
   }
 
   userId(title: string): string {
+    this.logservice.logDebugMessage(String('ArticlesComponent userId() '));
    let id: string[] = title.split("Ω")
      return id[0];
   }
 
   deleteArticle(articleId: string) {
+    this.logservice.logDebugMessage(String('ArticlesComponent deleteArticle() '));
     this.articleRepository.deleteArticle(articleId);
   }
   
   adminVerify() {
-    let authorities = this.tokenService.getDecodedToken().authorities;
-    for(let auth of authorities){
-      auth.authority == 'admin' ? this.admincheck = true : null;
+    this.logservice.logDebugMessage(String('ArticlesComponent adminVerify() '));
+     this.admincheck = this.tokenService.getAdmin();
     }
-  }
+  
 }
 

@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MyPasswordValidator } from 'src/app/shared/user/confirm-password-validator';
 import { UserModel } from 'src/app/model/user.model';
 import { TokenService } from 'src/app/shared/user/token.service';
+import { LogService } from 'src/app/shared/log.service';
 
 @Component({
   selector: 'app-edit-user-details',
@@ -17,8 +18,10 @@ export class EditUserDetailsComponent {
   formSubmitted: boolean = false;
   hide = true;
   
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private tokenService: TokenService) {
-    this.userService.getUser(tokenService.getEmail()).subscribe(
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private tokenService: TokenService,
+    private logservice: LogService) {
+      this.logservice.logDebugMessage(String('EditUserDetailsComponent constructor: '));
+      this.userService.getUser(tokenService.getEmail()).subscribe(
       res => { this.userModel = res;
               this.editUserDetailsForm.controls['firstName'].patchValue(res.firstName);
               this.editUserDetailsForm.controls['lastName'].patchValue(res.lastName);
@@ -46,6 +49,7 @@ export class EditUserDetailsComponent {
         },{validator: MyPasswordValidator.ConformPasswordValidator()});
 
     enableEdit() {
+      this.logservice.logDebugMessage(String('EditUserDetailsComponent enableEdit() '));
       this.editProfile = true;
     }
 
@@ -53,6 +57,7 @@ export class EditUserDetailsComponent {
       Object.keys(this.editUserDetailsForm.controls)
             .forEach(c => this.userModel[c] = this.editUserDetailsForm.controls[c].value);
       if(this.editUserDetailsForm.valid){
+        this.logservice.logDebugMessage(String('EditUserDetailsComponent submitForm() '));
         this.userService.updateUser(this.userModel).subscribe(
           res => console.log(res)
         );

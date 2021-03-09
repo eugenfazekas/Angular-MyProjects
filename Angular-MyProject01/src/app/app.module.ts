@@ -31,6 +31,7 @@ import { NxMaterialModule } from './shared/nx-material/nx-material.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { EditUserDetailsComponent } from './components/user/edit-user-details/edit-user-details.component';
+import { LogLevel, LogService, } from './shared/log.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,16 @@ import { EditUserDetailsComponent } from './components/user/edit-user-details/ed
               ArticlesRepository,
               CategoriesRestDataSourceService,
               CategoriesRepository,
-              { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
+              { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+              { provide: LogLevel, useValue: LogLevel.INFO },
+              { provide: LogService, 
+                deps: [LogLevel],
+              useFactory: (level) => {
+                  let logger = new LogService();
+                  logger.minimumLevel = level;
+                  return logger;
+              } 
+            }
             ],
   bootstrap: [AppComponent]
 })

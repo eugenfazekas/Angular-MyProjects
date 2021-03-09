@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/user/auth.service';
 import { Router } from '@angular/router';
 import { SignButtonToggleService } from 'src/app/shared/user/sign-button-toggle.service';
 import { FormBuilder } from '@angular/forms';
+import { LogService } from 'src/app/shared/log.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +16,8 @@ export class LoginComponent {
   userLoginFormModel: UserLoginFormModel = new UserLoginFormModel();
 
   constructor(private authService: AuthService, private router: Router, private signToogleService: SignButtonToggleService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,private logservice: LogService) {
+                this.logservice.logDebugMessage(String('LoginComponent constructor: '));
     this.signToogleService.name = '';
     this.signToogleService.setLoggedIn(false);
   }
@@ -24,6 +26,7 @@ export class LoginComponent {
 
   submitForm() {
     if(this.loginForm.valid) {
+      this.logservice.logDebugMessage(String('LoginComponent submitForm() '));
       this.authService.loginUser(this.userLoginFormModel.email.value ,this.userLoginFormModel.password.value).subscribe(
         res =>  { this.signToogleService.setLoggedIn(true);
                   this.signToogleService.setFullname();

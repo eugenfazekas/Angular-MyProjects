@@ -6,6 +6,7 @@ import { UserModel } from '../../model/user.model';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenService } from './token.service';
+import { LogService } from '../log.service';
 
 @Injectable()
 export class AuthService {
@@ -15,12 +16,13 @@ export class AuthService {
 
  
 
-  constructor(private _http: HttpClient, @Inject(BASE_URL) _baseURL: string, private tokenService: TokenService) { 
+  constructor(private _http: HttpClient, @Inject(BASE_URL) _baseURL: string, private tokenService: TokenService, private logservice: LogService) { 
                        this.baseURL = _baseURL;
+                       this.logservice.logDebugMessage(String('AuthService constructor: '));
                   }               
   
   loginUser(user: string, pass: string): Observable<Boolean> {
- 
+    this.logservice.logDebugMessage(String('AuthService loginUser() '));
     return this._http.post(`${this.baseURL}/authenticate`, { "username" : user, "password" : pass }).pipe(
 
               map( (response: any) => {
