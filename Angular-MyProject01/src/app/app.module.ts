@@ -32,6 +32,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { EditUserDetailsComponent } from './components/user/edit-user-details/edit-user-details.component';
 import { LogLevel, LogService, } from './shared/log.service';
+import { NxPageFilterPipe } from './shared/article/nx-page-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { LogLevel, LogService, } from './shared/log.service';
     NxAuthorFilterPipe,
     NxSearchFilterPipe,
     NxPublishedDateFilterPipe,
+    NxPageFilterPipe,
     EditUserDetailsComponent
   ],
   imports: [

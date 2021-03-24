@@ -13,7 +13,7 @@ import { LogService } from 'src/app/shared/log.service';
 })
 export class EditUserDetailsComponent {
 
-  userModel: UserModel = null;
+  userModel: UserModel = new UserModel();
   editProfile: boolean = false;
   formSubmitted: boolean = false;
   hide = true;

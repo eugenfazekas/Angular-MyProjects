@@ -11,7 +11,11 @@ export class CategoriesRepository {
   constructor( private categoriesRestDataSourceService: CategoriesRestDataSourceService,private logservice: LogService ) {  
     this.logservice.logDebugMessage(String('CategoriesRepository constructor: ')); 
                   this.categoriesRestDataSourceService.getCategories().subscribe(
-          res => this.categories = res,
+          res => {
+            this.categories.push('All Categories');
+              for(let category of res){
+              this.categories.push(category);
+            }},
           err => console.log('Error on getting categories: ',err)
         )
   }

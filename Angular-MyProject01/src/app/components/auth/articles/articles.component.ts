@@ -25,12 +25,15 @@ export class ArticlesComponent implements OnInit {
   imageBlob: Blob;
   imageBase64;
   admincheck: boolean = false;
+  articlesPerPage = 5;
+  selectedPage = 1;
+  pages: Set<number> = new Set<number>();
+  articlesLength: number ;
 
   constructor(private articleRepository: ArticlesRepository, private categorisRepository: CategoriesRepository, 
-              private formBuilder: FormBuilder, private tokenService: TokenService,@Inject(BASE_URL) _baseURL: string,
-              private logservice: LogService) {
-                this.logservice.logDebugMessage(String('ArticlesComponent constructor: '));
-                this._url = _baseURL;
+              private formBuilder: FormBuilder, private tokenService: TokenService,@Inject(BASE_URL) _baseURL: string, private logservice: LogService) {
+                    this.logservice.logDebugMessage(String('ArticlesComponent constructor: '));
+                    this._url = _baseURL;
                }
 
   ngOnInit() {
@@ -168,5 +171,38 @@ export class ArticlesComponent implements OnInit {
      this.admincheck = this.tokenService.getAdmin();
     }
   
+  actualPage(page: number) {
+    this.selectedPage = page;
+  }
+
+  pageCalculator() {
+    this.pages.clear();
+    let artLength = 0;
+    let i = 1;
+    while(artLength < this.articlesLength) {
+      artLength += this.articlesPerPage;
+      this.pages.add(i);
+      i++;
+    }
+  }
+
+  setArticlesLength(length: number) {
+     this.pageCalculator();
+      this.articlesLength = length;
+  }
+
+  nextPage() {
+    let page = this.selectedPage;
+    if(this.pages.has(page + 1)){
+      this.selectedPage = this.selectedPage + 1;
+    }
+  }
+
+  prevoiusPage() {
+    let page = this.selectedPage;
+    if(this.pages.has(page - 1)){
+      this.selectedPage = this.selectedPage - 1;
+    }
+  }
 }
 

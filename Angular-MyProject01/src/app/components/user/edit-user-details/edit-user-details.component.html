@@ -85,19 +85,19 @@
                 <div>
                     <h3>Account Details</h3>
                     <table class="m-4">
-                        <tr><td>FirstName:</td><td>{{userModel?.firstName}}</td></tr>
-                        <tr><td>LastName:</td><td>{{userModel?.lastName}}</td></tr>
-                        <tr><td>Email:</td><td>{{userModel?.email}}</td></tr>
+                        <tr><td>FirstName:</td><td>{{userModel.firstName}}</td></tr>
+                        <tr><td>LastName:</td><td>{{userModel.lastName}}</td></tr>
+                        <tr><td>Email:</td><td>{{userModel.email}}</td></tr>
                     </table>
                 </div>  
             <br>
                 <div> 
                     <h3>User Address<Address></Address></h3>
                     <table class="m-4 ">
-                        <tr><td>Country:</td><td>{{userModel?.address?.country}}</td></tr>
-                        <tr><td>City:</td><td>{{userModel?.address?.city}}</td></tr>
-                        <tr><td>Street:</td><td>{{userModel?.address?.street}}</td></tr>
-                        <tr><td>Nr:</td><td>{{userModel?.address?.number}}</td></tr>
+                        <tr><td>Country:</td><td>{{userModel.address.country || '(None)'}}</td></tr>
+                        <tr><td>City:</td><td>{{userModel.address.city || '(None)'}}</td></tr>
+                        <tr><td>Street:</td><td>{{userModel.address.street || '(None)'}}</td></tr>
+                        <tr><td>Nr:</td><td>{{userModel.address.number || '(None)'}}</td></tr>
                     </table>
                 </div>
 
