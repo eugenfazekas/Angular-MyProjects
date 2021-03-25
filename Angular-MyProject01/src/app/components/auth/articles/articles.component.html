@@ -1,5 +1,5 @@
-<div class="col-14 ">
-          <div class="col-3 mr-3 float-left">
+<div class="col-14">
+          <div class="col-3 m-3 float-left border">
             <h2 class="m-4">Options Panel</h2>
                     <div class="ml-3">
                     <button mat-raised-button class="ml-3" (click)="enableArticle()" color="accent" >Create Article</button>
@@ -64,7 +64,7 @@
 
         </div>
 
-        <div class="float-left col-8 border-left">
+        <div class="float-left col-8 ">
             <br>    
             <div *ngIf="createArticle" class="col-14 border">
 
@@ -115,10 +115,15 @@
                 </form>
                 <img [src]="imageBase64">
             </div>
+            <div class="border">
+            <div>{{ setArticlesLength( (getArticles() | nxSearchFilterPipe: searchFilter.value | nxCategoryFilterPipe: categoryFilter 
+                | nxAuthorFilterPipe: authorFilter 
+                | nxPublishedDateFilterPipe: range.controls['start'].value : range.controls['end'].value ).length)}}
+            </div>
 
-            <div class="d-flex justify-content-center mb-4">
+            <div *ngIf="articlesLength != 0" class="d-flex justify-content-center m-4">
                 <button class = "btn btn-outline-primary mr-4" (click)="prevoiusPage()" >previous</button>
-                <button class = "btn btn-outline-primary" *ngFor="let page of pages" [class.active]="page == selectedPage" (click)=" actualPage(page)">{{page}}</button>
+                <button class = "btn btn-outline-primary m-1" *ngFor="let page of pages" [class.active]="page == selectedPage" (click)=" actualPage(page)">{{page}}</button>
                 <button class = "btn btn-outline-primary ml-4" (click)="nextPage()" >next</button>
             </div>
 
@@ -129,11 +134,7 @@
             | nxPageFilterPipe: articlesPerPage: selectedPage">
             <div *ngIf="admincheck">
                 <button  mat-raised-button color="warn" (click)="deleteArticle(article.id)" class="float-right">Delete Article</button>
-            </div >
-                <div>{{ setArticlesLength( (getArticles() | nxSearchFilterPipe: searchFilter.value | nxCategoryFilterPipe: categoryFilter 
-                    | nxAuthorFilterPipe: authorFilter 
-                    | nxPublishedDateFilterPipe: range.controls['start'].value : range.controls['end'].value ).length)}}
-                </div>
+            </div >  
                 <h3 class="col-10">Title: {{article.title}}</h3>
                 <p>Content: {{article.content}}</p>
                 <p>Published: {{article.published_date}}</p>
@@ -144,6 +145,15 @@
                </div>
             <hr>
             </div>
+            <div *ngIf="articlesLength < 1" >
+                <h1>No Articles match :(</h1>
+            </div>
+            <div *ngIf="articlesLength > 5" class="d-flex justify-content-center m-4">
+                <button class = "btn btn-outline-primary mr-4" (click)="prevoiusPage()" >previous</button>
+                <button class = "btn btn-outline-primary m-1" *ngFor="let page of pages" [class.active]="page == selectedPage" (click)=" actualPage(page)">{{page}}</button>
+                <button class = "btn btn-outline-primary ml-4" (click)="nextPage()" >next</button>
+            </div>
+        </div>  
         </div>
     <div class="clearfix"></div>
 </div>
