@@ -19,6 +19,12 @@
                     <input matInput placeholder="" formControlName="email">
                     </mat-form-field>
 
+                    <mat-form-field class=" clearfix">
+                        <mat-label>Upload Photo</mat-label>
+                        <ngx-mat-file-input formControlName="image" [multiple]="multiple" (change)="onChange($event)" name="fileInput" [accept]="accept">
+                        </ngx-mat-file-input>
+                     </mat-form-field>
+
                     <div>
                         <p class="clearfix"></p>
                         <div class="float-left">
@@ -94,10 +100,10 @@
                 <div> 
                     <h3>User Address<Address></Address></h3>
                     <table class="m-4 ">
-                        <tr><td>Country:</td><td>{{userModel.address.country || '(None)'}}</td></tr>
-                        <tr><td>City:</td><td>{{userModel.address.city || '(None)'}}</td></tr>
-                        <tr><td>Street:</td><td>{{userModel.address.street || '(None)'}}</td></tr>
-                        <tr><td>Nr:</td><td>{{userModel.address.number || '(None)'}}</td></tr>
+                        <tr><td>Country:</td><td>{{ userModel.address?.country }}</td></tr>
+                        <tr><td>City:</td><td>{{ userModel.address?.city }}</td></tr>
+                        <tr><td>Street:</td><td>{{ userModel.address?.street }}</td></tr>
+                        <tr><td>Nr:</td><td>{{ userModel.address?.number }}</td></tr>
                     </table>
                 </div>
 

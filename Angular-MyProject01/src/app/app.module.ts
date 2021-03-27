@@ -33,6 +33,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { EditUserDetailsComponent } from './components/user/edit-user-details/edit-user-details.component';
 import { LogLevel, LogService, } from './shared/log.service';
 import { NxPageFilterPipe } from './shared/article/nx-page-filter.pipe';
+import { ImageService } from './shared/image.service';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { NxPageFilterPipe } from './shared/article/nx-page-filter.pipe';
                   logger.minimumLevel = level;
                   return logger;
               } 
-            }
+            },
+            ImageService
             ],
   bootstrap: [AppComponent]
 })

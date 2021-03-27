@@ -5,6 +5,7 @@ import { MyPasswordValidator } from 'src/app/shared/user/confirm-password-valida
 import { UserModel } from 'src/app/model/user.model';
 import { TokenService } from 'src/app/shared/user/token.service';
 import { LogService } from 'src/app/shared/log.service';
+import { ImageService } from 'src/app/shared/image.service';
 
 @Component({
   selector: 'app-edit-user-details',
@@ -17,9 +18,11 @@ export class EditUserDetailsComponent {
   editProfile: boolean = false;
   formSubmitted: boolean = false;
   hide = true;
+  accept: string[] = ['.jpg','.png','.jpeg'];
+  multiple:boolean = false;
   
   constructor(private userService: UserService, private formBuilder: FormBuilder, private tokenService: TokenService,
-    private logservice: LogService) {
+    private logservice: LogService, public imageService: ImageService) {
       this.logservice.logDebugMessage(String('EditUserDetailsComponent constructor: '));
       this.userService.getUser(tokenService.getEmail()).subscribe(
       res => { this.userModel = res;
@@ -40,6 +43,7 @@ export class EditUserDetailsComponent {
             email: ['',[ Validators.minLength(5) ]],
             password: ['',[ Validators.minLength(5)]],
             confirmPassword: ['',[ Validators.minLength(5),  ]],
+            image: ['',[Validators.pattern('[^Ω]+')]],
             address : this.formBuilder.group({
                 country: ['',[ Validators.minLength(2) ]],
                 city: ['',[ Validators.minLength(3) ]],
@@ -47,6 +51,12 @@ export class EditUserDetailsComponent {
                 number: ['',[ Validators.minLength(1) ]],
              })
         },{validator: MyPasswordValidator.ConformPasswordValidator()});
+
+     onChange(event) {
+          this.logservice.logDebugMessage(String('ArticlesComponent onChange() '));
+          let item = this.editUserDetailsForm.controls['image'].value;
+          this.imageService.inputService(item);
+        }
 
     enableEdit() {
       this.logservice.logDebugMessage(String('EditUserDetailsComponent enableEdit() '));
@@ -59,7 +69,7 @@ export class EditUserDetailsComponent {
       if(this.editUserDetailsForm.valid){
         this.logservice.logDebugMessage(String('EditUserDetailsComponent submitForm() '));
         this.userService.updateUser(this.userModel).subscribe(
-          res => console.log(res)
+          res => this.logservice.logDebugMessage(String(res))
         );
         this.formSubmitted = true;
         this.editProfile = false;

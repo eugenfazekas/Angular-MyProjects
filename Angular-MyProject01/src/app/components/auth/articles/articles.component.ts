@@ -8,6 +8,7 @@ import { formatDate } from '@angular/common';
 import * as EventEmitter from 'events';
 import { BASE_URL } from 'src/app/shared/user/user-rest-data-source.service';
 import { LogService } from 'src/app/shared/log.service';
+import { ImageService } from 'src/app/shared/image.service';
 
 @Component({
   selector: 'app-articles',
@@ -20,10 +21,8 @@ export class ArticlesComponent implements OnInit {
   categoryFilter: string = 'All Categories';
   authorFilter: string = 'All Authors';
   newArticle: ArticleModel = new ArticleModel();
-  accept:string[] = ['.jpg','.png','.jpeg'];
+  accept: string[] = ['.jpg','.png','.jpeg'];
   multiple:boolean = false;
-  imageBlob: Blob;
-  imageBase64;
   admincheck: boolean = false;
   articlesPerPage = 5;
   selectedPage = 1;
@@ -31,22 +30,18 @@ export class ArticlesComponent implements OnInit {
   articlesLength: number ;
 
   constructor(private articleRepository: ArticlesRepository, private categorisRepository: CategoriesRepository, 
-              private formBuilder: FormBuilder, private tokenService: TokenService,@Inject(BASE_URL) _baseURL: string, private logservice: LogService) {
+              private formBuilder: FormBuilder, private tokenService: TokenService,
+               private logservice: LogService, public imageService: ImageService) {
                     this.logservice.logDebugMessage(String('ArticlesComponent constructor: '));
-                    this._url = _baseURL;
                }
 
   ngOnInit() {
-
-    this.adminVerify();
- 
+      this.adminVerify();
   }
 
   searchForm = this.formBuilder.group({ search: ['',[ Validators.minLength(3) ]]});
-
   range = this.formBuilder.group({start: new FormControl(), end: new FormControl() });
-  _url: string; 
-  imageWidths: number = 500;
+
   
   createArticleForm = this.formBuilder.group({ 
                   category: ['',[ Validators.minLength(3),Validators.required ]],
@@ -57,52 +52,8 @@ export class ArticlesComponent implements OnInit {
   onChange(event) {
     this.logservice.logDebugMessage(String('ArticlesComponent onChange() '));
     let item = this.createArticleForm.controls['image'].value;
-    this.fileReader(item).then(res => this.compressImage(res, this.imageWidths).then(res => { this.imageBlob = this.b64toBlob(res); this.imageBase64 = res}))
+    this.imageService.inputService(item);
   }
-
-  fileReader(item) {
-    this.logservice.logDebugMessage(String('ArticlesComponent fileReader() '));
-    return new Promise( (res)  => {
-            let reader = new FileReader();
-            reader.readAsDataURL(item);
-            reader.onload = ( (data) => {
-                     res(data.target.result);
-            }
-         )   
-       }
-    )
-  }
-
- compressImage(src,width) {
-  this.logservice.logDebugMessage(String('ArticlesComponent compressImage() '));
-      return new Promise((res, rej) => {
-        const img = new Image();
-        img.src = src;
-        img.onload = (event) => {
-          const elem = document.createElement('canvas');
-          const loadedImage: any = event.currentTarget;
-          elem.width = width;
-          elem.height = (loadedImage.width / loadedImage.height > 0 ? ( width / ( loadedImage.width / loadedImage.height )) : (width / (loadedImage.height / loadedImage.width)));
-          const ctx = elem.getContext('2d');
-          ctx.drawImage(img, 0, 0, elem.width, elem.height);
-          const data = ctx.canvas.toDataURL();
-          res(data);
-        }
-        img.onerror = error => rej(error);
-      })
-    }
-
-  b64toBlob(dataURI) { 
-    this.logservice.logDebugMessage(String('ArticlesComponent b64toBlob() '));    
-        let byteString = atob(dataURI.split(',')[1]);
-        let ab = new ArrayBuffer(byteString.length);
-        let ia = new Uint8Array(ab);
-    
-        for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: 'image/png' });
-    } 
 
   getArticles(): ArticleModel[] {
     this.logservice.logDebugMessage(String('ArticlesComponent getArticles() '));
@@ -147,7 +98,7 @@ export class ArticlesComponent implements OnInit {
                       this.articleRepository.saveArticle(this.newArticle);
                         if(this.createArticleForm.controls['image'].value) {
                           let formData = new FormData();
-                          formData.append('fileInput', this.imageBlob, this.getImageTitle(id));
+                          formData.append('fileInput', this.imageService.imageBlob, this.getImageTitle(id));
                           this.articleRepository.saveImage(formData);
                       }
                       this.createArticle = false;
