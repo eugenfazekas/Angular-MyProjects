@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { UserModel } from 'src/app/model/user.model';
 import { UserRegistrationFormGroup } from 'src/app/model/userRegistrationForm.model';
-import { UserService } from 'src/app/shared/user/user.service';
 import { UserRestDataSourceService } from 'src/app/shared/user/user-rest-data-source.service';
 import { Router } from '@angular/router';
 import { LogService } from 'src/app/shared/log.service';
@@ -13,7 +12,7 @@ import { LogService } from 'src/app/shared/log.service';
 })
 export class RegistrationComponent {
 
-constructor(private userService: UserService,private _userRestDataSourceService: UserRestDataSourceService,
+constructor(private _userRestDataSourceService: UserRestDataSourceService,
      private router: Router, private logservice: LogService) {
         this.logservice.logDebugMessage(String('RegistrationComponent constructor: '));
       }
@@ -30,7 +29,7 @@ formSubmitted: boolean = false;
         this.formSubmitted = true;
         if (this.formGroup.valid) {
             this.logservice.logDebugMessage(String('RegistrationComponent submitForm() '));
-            this.userService.saveUser(this.newUser).subscribe(
+            this._userRestDataSourceService.saveUser(this.newUser).subscribe(
                 res => this.router.navigateByUrl('')
             )
         }

@@ -14,27 +14,16 @@ import { ImageService } from 'src/app/shared/image.service';
 })
 export class EditUserDetailsComponent {
 
-  userModel: UserModel = new UserModel();
+  firstName: string;
+  userModel : UserModel = new UserModel();
   editProfile: boolean = false;
   formSubmitted: boolean = false;
   hide = true;
-  accept: string[] = ['.jpg','.png','.jpeg'];
-  multiple:boolean = false;
-  
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private tokenService: TokenService,
-    private logservice: LogService, public imageService: ImageService) {
+
+  constructor(public userService: UserService, private formBuilder: FormBuilder, private tokenService: TokenService,
+      private logservice: LogService, public imageService: ImageService) {
       this.logservice.logDebugMessage(String('EditUserDetailsComponent constructor: '));
-      this.userService.getUser(tokenService.getEmail()).subscribe(
-      res => { this.userModel = res;
-              this.editUserDetailsForm.controls['firstName'].patchValue(res.firstName);
-              this.editUserDetailsForm.controls['lastName'].patchValue(res.lastName);
-              this.editUserDetailsForm.controls['email'].patchValue(res.email);
-              res.address ? this.editUserDetailsForm.patchValue({address : { country : res.address.country }}) : '';
-              res.address ? this.editUserDetailsForm.patchValue({address : { city : res.address.city }}): '';
-              res.address ? this.editUserDetailsForm.patchValue({address : { street : res.address.street }}): '';
-              res.address ? this.editUserDetailsForm.patchValue({address : { number : res.address.number }}): '';
-      }
-    )
+      this.firstName = tokenService.getFirstName();
   }
 
     editUserDetailsForm = this.formBuilder.group({ 
@@ -43,7 +32,6 @@ export class EditUserDetailsComponent {
             email: ['',[ Validators.minLength(5) ]],
             password: ['',[ Validators.minLength(5)]],
             confirmPassword: ['',[ Validators.minLength(5),  ]],
-            image: ['',[Validators.pattern('[^Ω]+')]],
             address : this.formBuilder.group({
                 country: ['',[ Validators.minLength(2) ]],
                 city: ['',[ Validators.minLength(3) ]],
@@ -52,27 +40,32 @@ export class EditUserDetailsComponent {
              })
         },{validator: MyPasswordValidator.ConformPasswordValidator()});
 
-     onChange(event) {
-          this.logservice.logDebugMessage(String('ArticlesComponent onChange() '));
-          let item = this.editUserDetailsForm.controls['image'].value;
-          this.imageService.inputService(item);
-        }
+     pacthEditUserDetailsForm(res: UserModel) {
+          this.editUserDetailsForm.controls['firstName'].patchValue(res.firstName);
+          this.editUserDetailsForm.controls['lastName'].patchValue(res.lastName);
+          this.editUserDetailsForm.controls['email'].patchValue(res.email);
+          res.address ? this.editUserDetailsForm.patchValue({address : { country : res.address.country }}) : '';
+          res.address ? this.editUserDetailsForm.patchValue({address : { city : res.address.city }}): '';
+          res.address ? this.editUserDetailsForm.patchValue({address : { street : res.address.street }}): '';
+          res.address ? this.editUserDetailsForm.patchValue({address : { number : res.address.number }}): '';
+     }         
 
     enableEdit() {
-      this.logservice.logDebugMessage(String('EditUserDetailsComponent enableEdit() '));
+      this.logservice.logDebugMessage(String('EditUserDetailsComponent enableEdit()'));
       this.editProfile = true;
+      this.pacthEditUserDetailsForm(this.userService.getUser());
     }
 
     submitForm() {
+      this.userModel.id = this.tokenService.getDecodedToken().id; 
       Object.keys(this.editUserDetailsForm.controls)
             .forEach(c => this.userModel[c] = this.editUserDetailsForm.controls[c].value);
       if(this.editUserDetailsForm.valid){
         this.logservice.logDebugMessage(String('EditUserDetailsComponent submitForm() '));
-        this.userService.updateUser(this.userModel).subscribe(
-          res => this.logservice.logDebugMessage(String(res))
-        );
+        this.userService.updateUser(this.userModel);
         this.formSubmitted = true;
         this.editProfile = false;
       }
-    }   
+    } 
+    
 }

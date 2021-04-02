@@ -10,8 +10,6 @@ import { LogService } from '../log.service';
 export class ArticleRestDataSourceService {
 
   private baseURL: string ;
-
-  private tokenHeader = new HttpHeaders().set('Authorization', `Bearer ${this.tokenService.getToken()}`);
   
   private param(param: string) {
         return new HttpParams().set('articleId', param)
@@ -24,21 +22,21 @@ export class ArticleRestDataSourceService {
 
    getArticles(): Observable<ArticleModel[]> {
     this.logservice.logDebugMessage(String('ArticleRestDataSourceService getArticles() '));
-    return this._http.get<ArticleModel[]>(`${this.baseURL}/article/findAllArticles`,{'headers': this.tokenHeader})
+    return this._http.get<ArticleModel[]>(`${this.baseURL}/article/findAllArticles`,{'headers': this.tokenService.getOptions()})
    }
    
    saveArticle(article: ArticleModel): Observable<ArticleModel> {
     this.logservice.logDebugMessage(String('ArticleRestDataSourceService saveArticle() '));
-    return this._http.post<ArticleModel>(`${this.baseURL}/article/saveArticle`,article, {'headers': this.tokenHeader});
+    return this._http.post<ArticleModel>(`${this.baseURL}/article/saveArticle`,article, {'headers': this.tokenService.getOptions()});
   }
 
    saveImage(image: FormData): Observable<string> {
     this.logservice.logDebugMessage(String('ArticleRestDataSourceService saveImage() '));
-    return this._http.post(`${this.baseURL}/article/saveImage`,image, {'headers': this.tokenHeader, responseType: 'text'});
+    return this._http.post(`${this.baseURL}/article/saveImage`,image, {'headers': this.tokenService.getOptions(), responseType: 'text'});
   }
 
    deleteArticle(articleId: string):Observable<string> {
     this.logservice.logDebugMessage(String('ArticleRestDataSourceService deleteArticle() '));
-     return this._http.post(`${this.baseURL}/admin/deleteArticle`,{},{'headers': this.tokenHeader, 'params' : this.param(articleId) , responseType: 'text'})
+     return this._http.post(`${this.baseURL}/admin/deleteArticle`,{},{'headers': this.tokenService.getOptions(), 'params' : this.param(articleId) , responseType: 'text'})
    }
 }

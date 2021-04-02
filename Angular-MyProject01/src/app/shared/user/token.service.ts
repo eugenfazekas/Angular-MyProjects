@@ -81,7 +81,15 @@ export class TokenService {
       auth.authority == 'admin' ?  this.subject.next(true) : null;
             }
           }
-      }   
+      }
+   getFirstName() {
+    this.logservice.logDebugMessage(String('TokenService getFirstName()'));
+    let decodedToken = this.jwt.decodeToken(this.auth_token);
+    let name = decodedToken != null ? decodedToken.fullName : '' ;
+    let fullName: string[];
+    fullName = decodedToken != '' ? name.split(" ") : [];
+    return fullName.length > 0 ? fullName[0] : '';
+   } 
 }
 
 

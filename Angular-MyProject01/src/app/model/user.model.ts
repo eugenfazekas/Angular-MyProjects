@@ -11,8 +11,10 @@ export class UserModel {
 				 public	password?: string,
 				 public date_registered?: string,
 				 public	active?: boolean,
+				 public activeProfilePhoto?: string,
 				 public authorities?:  string[], 
 				 public articlesId?: string[],
+				 public profilePhotos?:  string[], 
 				 public address?: UserAddress
 				) {}
 }

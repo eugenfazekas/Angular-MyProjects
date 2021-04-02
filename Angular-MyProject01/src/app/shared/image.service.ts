@@ -66,4 +66,9 @@ export class ImageService {
     getBase64() {
       return this.imageBase64;
     }
+
+    setBase64Null() {
+      this.imageBase64 = null;
+      return this.imageBase64;
+    }
 }

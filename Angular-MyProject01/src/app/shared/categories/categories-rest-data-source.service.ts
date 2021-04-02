@@ -12,8 +12,6 @@ export class CategoriesRestDataSourceService {
 
   private baseURL: string ;
   
-  private tokenHeader = new HttpHeaders().set('Authorization', `Bearer ${this.tokenService.getToken()}`);
-  
   private param(param: string) {
         return new HttpParams().set('category', param)
   }
@@ -25,12 +23,12 @@ export class CategoriesRestDataSourceService {
 
     addCategory(category: string): Observable<string> { 
       this.logservice.logDebugMessage(String('CategoriesRestDataSourceService addCategory() '));
-      return this._http.post(`${this.baseURL}/categories/addCategory`,{},{'headers': this.tokenHeader, 'params' : this.param(category) , responseType: 'text'})
+      return this._http.post(`${this.baseURL}/categories/addCategory`,{},{'headers': this.tokenService.getOptions(), 'params' : this.param(category) , responseType: 'text'})
     }
 
     deleteCategory(category: string): Observable<string> {
       this.logservice.logDebugMessage(String('CategoriesRestDataSourceService deleteCategory() '));
-      return this._http.post(`${this.baseURL}/categories/deleteCategory`,{},{'headers': this.tokenHeader, 'params' : this.param(category) , responseType: 'text'});
+      return this._http.post(`${this.baseURL}/categories/deleteCategory`,{},{'headers': this.tokenService.getOptions(), 'params' : this.param(category) , responseType: 'text'});
     }
 
     getCategories(): Observable<string[]> {

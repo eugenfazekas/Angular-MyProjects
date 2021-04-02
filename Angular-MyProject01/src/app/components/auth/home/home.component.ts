@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'src/app/shared/log.service';
+import { TokenService } from 'src/app/shared/user/token.service';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +9,19 @@ import { LogService } from 'src/app/shared/log.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private logservice: LogService) {
+  reloadcheck: boolean = false;
+
+  constructor(private tokenService : TokenService, private logservice: LogService) {
     this.logservice.logDebugMessage(String('HomeComponent constructor: '));
    }
 
   ngOnInit(): void {
+    this.reload();
+  }
+
+  reload() {
+    this.reloadcheck == true ?  window.location.reload() : null ;
+    this.reloadcheck = true ; 
   }
 
 }

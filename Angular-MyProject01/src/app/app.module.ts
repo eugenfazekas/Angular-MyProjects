@@ -34,6 +34,7 @@ import { EditUserDetailsComponent } from './components/user/edit-user-details/ed
 import { LogLevel, LogService, } from './shared/log.service';
 import { NxPageFilterPipe } from './shared/article/nx-page-filter.pipe';
 import { ImageService } from './shared/image.service';
+import { ManageImagesComponent } from './components/user/manage-images/manage-images.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ImageService } from './shared/image.service';
     NxSearchFilterPipe,
     NxPublishedDateFilterPipe,
     NxPageFilterPipe,
-    EditUserDetailsComponent
+    EditUserDetailsComponent,
+    ManageImagesComponent
   ],
   imports: [
     BrowserModule,
