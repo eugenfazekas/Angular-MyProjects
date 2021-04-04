@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistrationComponent } from './components/user/registration/registration.component';
-import { ArticlesComponent } from './components/auth/articles/articles.component';
-import { HomeComponent } from './components/auth/home/home.component';
-import { AuthGuard } from './shared/user/auth-guard';
-import { CategoriesComponent } from './components/admin/categories/categories.component';
-import { EditUserDetailsComponent } from './components/user/edit-user-details/edit-user-details.component';
-import { ManageImagesComponent } from './components/user/manage-images/manage-images.component';
+import { LoginComponent } from './components/no_auth/user/login/login.component';
+import { RegistrationComponent } from './components/no_auth/user/registration/registration.component';
+import { ArticlesComponent } from './components/auth/common/articles/articles.component';
+import { HomeComponent } from './components//auth/user/home/home.component';
+import { AuthGuard } from './shared/guards/auth-guard';
+import { CategoriesComponent } from './components/auth/admin/categories/categories.component';
+import { EditUserDetailsComponent } from './components/auth/user/edit-user-details/edit-user-details.component';
+import { ManageImagesComponent } from './components/auth/user/manage-images/manage-images.component';
 
 const routes: Routes = [
         { path: "", component: HomeComponent , canActivate: [AuthGuard] },

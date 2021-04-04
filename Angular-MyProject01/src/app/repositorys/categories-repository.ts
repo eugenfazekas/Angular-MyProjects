@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CategoriesRestDataSourceService } from '../shared/categories/categories-rest-data-source.service';
+import { CategoriesRestDataSourceService } from '../rest-api/categories-rest-data-source.service';
 import { Observable } from 'rxjs';
-import { LogService } from '../shared/log.service';
+import { LogService } from '../shared/services/log.service';
 
 @Injectable()
 export class CategoriesRepository {

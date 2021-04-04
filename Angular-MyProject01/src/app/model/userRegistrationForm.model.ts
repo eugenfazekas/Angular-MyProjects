@@ -1,7 +1,7 @@
 import {FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserExistValidator } from '../shared/user/user-exist-form-validator';
-import { UserRestDataSourceService } from '../shared/user/user-rest-data-source.service';
-import { MyPasswordValidator } from '../shared/user/confirm-password-validator';
+import { UserExistValidator } from '../shared/validators/user-exist-form-validator';
+import { UserRestDataSourceService } from '../rest-api/user-rest-data-source.service';
+import { MyPasswordValidator } from '../shared/validators/confirm-password-validator';
 
 export class UserRegistrationFormControl extends FormControl{
 

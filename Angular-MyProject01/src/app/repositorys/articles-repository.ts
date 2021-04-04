@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ArticleRestDataSourceService } from '../shared/article/article-rest-data-source.service';
+import { ArticleRestDataSourceService } from '../rest-api/article-rest-data-source.service';
 import { ArticleModel } from '../model/article.model';
-import { LogService } from '../shared/log.service';
+import { LogService } from '../shared/services/log.service';
 
 
 @Injectable()
